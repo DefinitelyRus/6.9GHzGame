@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="6.9GHz Game"
+run/main_scene="uid://dclg7ki5h2j0h"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
