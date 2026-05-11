@@ -113,7 +113,7 @@ static func toggle_help() -> void:
 			
 			end_transition()
 			
-			if SceneLoader.loaded_scene == null:
+			if SceneLoader.instance.loaded_scene == null:
 				if instance.main_menu_node != null:
 					instance.main_menu_node.visible = true
 					pass
