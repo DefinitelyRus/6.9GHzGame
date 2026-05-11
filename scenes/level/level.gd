@@ -9,25 +9,19 @@ var active_domain: Domain
 var _using_fantasy_domain: bool = false
 
 
+## Sets the active domain to the fantasy domain.
 func use_fantasy_domain(enable: bool) -> void:
-	# TODO: Write logic to swap over to/from the fantasy domain.
-	if enable:
-		active_domain = fantasy_domain
+    if enable:
+        fantasy_domain.set_enabled(true)
+        real_domain.set_enabled(false)
+        active_domain = fantasy_domain
+        pass
 
-		camera.visibility_layer
-		pass
+    else:
+        fantasy_domain.set_enabled(false)
+        real_domain.set_enabled(true)
+        active_domain = real_domain
+        pass
 
-	else:
-		active_domain = real_domain
-		pass
-
-
-
-	_using_fantasy_domain = enable
-	return
-
-
-func toggle_domain() -> void:
-	if _using_fantasy_domain: use_fantasy_domain(false)
-	else: use_fantasy_domain(true)
-	return
+    _using_fantasy_domain = enable
+    return
