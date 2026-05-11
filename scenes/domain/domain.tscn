@@ -1,3 +1,11 @@
 [gd_scene format=3 uid="uid://hn2kdiggldqp"]
 
+[ext_resource type="Script" uid="uid://cfb6t7q2nu1w0" path="res://scenes/domain/domain.gd" id="1_l08qp"]
+
 [node name="Domain" type="Node2D" unique_id=1073536569]
+script = ExtResource("1_l08qp")
+
+[node name="TileMap" type="TileMap" parent="." unique_id=809273221]
+format = 2
+
+[node name="WorldObjects" type="Node" parent="." unique_id=525677343]
