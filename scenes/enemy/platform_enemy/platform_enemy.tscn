@@ -1,5 +1,14 @@
 [gd_scene format=3 uid="uid://cyofv6ndxrd3h"]
 
 [ext_resource type="PackedScene" uid="uid://dxx774ofkp4h4" path="res://scenes/enemy/enemy.tscn" id="1_1wn07"]
+[ext_resource type="Script" uid="uid://dboj1026jm2e0" path="res://scenes/enemy/platform_enemy/platform_enemy.gd" id="2_di038"]
 
-[node name="Enemy" unique_id=1143264470 instance=ExtResource("1_1wn07")]
+[node name="PlatformEnemy" unique_id=1143264470 node_paths=PackedStringArray("patrol_points") instance=ExtResource("1_1wn07")]
+script = ExtResource("2_di038")
+patrol_speed = 40.0
+chase_speed = 150.0
+gravity = 500.0
+respected_edges = true
+turn_at_walls = true
+patrol_wait_time = 1.0
+patrol_points = []
