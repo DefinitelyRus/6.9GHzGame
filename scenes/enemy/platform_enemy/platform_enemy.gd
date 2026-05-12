@@ -23,7 +23,7 @@ var edge_check: RayCast2D
 var wall_check: RayCast2D
 
 # ---------- GODOT CALLBACKS ----------
-func initialize_enemy() -> void:
+func _initialize_enemy() -> void:
 	setup_raycasts()
 	current_state = State.PATROL
 	return
@@ -74,6 +74,15 @@ func update_ai(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if current_state == State.DEAD:
 		return
+
+	if _hitstop_active:
+		return
+
+	# Tick attack cooldown
+	if not _can_attack:
+		_attack_cooldown_timer -= delta
+		if _attack_cooldown_timer <= 0.0:
+			_can_attack = true
 
 	if not is_on_floor():
 		velocity.y += gravity * delta

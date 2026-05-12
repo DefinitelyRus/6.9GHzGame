@@ -25,7 +25,7 @@ var _retreat_target: Vector2 = Vector2.ZERO
 var _is_returning: bool = false
 
 # ---------- GODOT CALLBACKS ----------
-func initialize_enemy() -> void:
+func _initialize_enemy() -> void:
 	hover_origin = global_position
 	current_state = State.PATROL
 	return
@@ -184,9 +184,9 @@ func _physics_process(_delta: float) -> void:
 	if _hitstop_active:
 		return
 
+	# Tick attack cooldown
 	if not _can_attack:
 		_attack_cooldown_timer -= _delta
-
 		if _attack_cooldown_timer <= 0.0:
 			_can_attack = true
 

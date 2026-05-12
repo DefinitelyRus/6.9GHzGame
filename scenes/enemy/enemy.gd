@@ -2,7 +2,7 @@ class_name Enemy
 extends CharacterBody2D
 
 # ---------- STATE ----------
-enum State { IDLE, PATROL, CHASE, ATTACK, HURT, DEAD }
+enum State { IDLE, PATROL, CHASE, ATTACK, HURT, DEAD, KNOCKED_OUT }
 
 # ---------- PROPERTIES ----------
 var current_state: State = State.IDLE
@@ -38,6 +38,8 @@ var facing_direction: int = 1
 
 # ---------- INTERNAL ----------
 var _hitstop_active: bool = false
+var _attack_cooldown_timer: float = 0.0
+var _can_attack: bool = true
 
 # ---------- SIGNALS ----------
 signal health_changed(current_health: float, max_health: float)
@@ -82,12 +84,9 @@ func _on_detection_area_entered(body: Node2D) -> void:
 
 func _on_detection_area_exited(body: Node2D) -> void:
 	if body == target:
-		# Use distance_squared_to for performance; it avoids a square root calculation.
-		var distance_sq: float = global_position.distance_squared_to(target.global_position)
-		if distance_sq > (lose_aggro_range * lose_aggro_range):
-			target = null
-			current_state = State.IDLE
-			emit_signal("state_changed", current_state)
+		target = null
+		current_state = State.IDLE
+		emit_signal("state_changed", current_state)
 
 func _on_attack_area_entered(body: Node2D) -> void:
 	# Using groups is more robust and standard than checking node names.
@@ -109,17 +108,16 @@ func take_damage(amount: float, is_weakpoint: bool = false) -> void:
 	emit_signal("health_changed", current_health, max_health)
 	emit_signal("damaged", amount)
 
-	flash_sprite()
+	_flash_sprite(is_weakpoint)
+	_hitstop(hitstop_duration_weakpoint if is_weakpoint else hitstop_duration)
 	
 	if current_health <= 0:
 		die()
 	else:
 		enter_hurt_state()
-
-	if is_weakpoint:
-		_hitstop(hitstop_duration_weakpoint)
-	else:
-		_hitstop(hitstop_duration)
+		if is_weakpoint:
+			emit_signal("weakpoint_hit")
+			_enter_knockout(randf_range(6.0, 12.0))
 
 func _hitstop(duration: float) -> void:
 	if _hitstop_active:
@@ -134,11 +132,30 @@ func apply_knockback(force: Vector2) -> void:
 func stun(duration: float) -> void:
 	is_stunned = true
 	if sprite:
-		sprite.modulate = Color.YELLOW
+		sprite.modulate = Color(0.4, 0.8, 1.0)
 	await get_tree().create_timer(duration).timeout
 	is_stunned = false
 	if sprite and current_state != State.DEAD:
 		sprite.modulate = Color.WHITE
+
+func _flash_sprite(is_weakpoint: bool = false) -> void:
+	if not sprite:
+		return
+		
+	var flash_color := Color(1.5, 1.2, 0.0) if is_weakpoint else Color(2.0, 2.0, 2.0)
+	var flash_duration := 0.12 if is_weakpoint else 0.08
+
+	if is_weakpoint:
+		for _i in range(2):
+			sprite.modulate = flash_color
+			await get_tree().create_timer(flash_duration * 0.5).timeout
+			sprite.modulate = Color.WHITE
+			await get_tree().create_timer(0.03).timeout
+	else:
+		sprite.modulate = flash_color
+		await get_tree().create_timer(flash_duration).timeout
+		if sprite and current_state != State.DEAD:
+			sprite.modulate = Color.WHITE
 
 func flash_sprite() -> void:
 	if sprite:
@@ -151,9 +168,44 @@ func enter_hurt_state() -> void:
 	var previous_state = current_state
 	current_state = State.HURT
 	emit_signal("state_changed", current_state)
-	await get_tree().create_timer(0.5).timeout
-	if current_state == State.HURT:
-		current_state = previous_state
+	is_stunned = true
+	
+	if sprite:
+		sprite.modulate = Color(0.4, 0.8, 1.0)
+	
+	await get_tree().create_timer(0.6).timeout
+	is_stunned = false
+	
+	if sprite and current_state != State.DEAD:
+		sprite.modulate = Color.WHITE
+	
+	if current_state == State.DEAD:
+		return
+	
+	current_state = State.CHASE if target else previous_state
+	emit_signal("state_changed", current_state)
+
+func _enter_knockout(duration: float) -> void:
+	is_knocked_out = true
+	current_state = State.KNOCKED_OUT
+	emit_signal("state_changed", current_state)
+
+	if sprite:
+		sprite.modulate = Color(0.6, 0.6, 1.0)
+		if sprite.sprite_frames and sprite.sprite_frames.has_animation("knocked_out"):
+			sprite.play("knocked_out")
+
+	await get_tree().create_timer(duration).timeout
+
+	if current_state == State.DEAD:
+		return
+
+	is_knocked_out = false
+	current_state = State.IDLE if not target else State.CHASE
+	emit_signal("state_changed", current_state)
+
+	if sprite:
+		sprite.modulate = Color.WHITE
 
 func die() -> void:
 	current_state = State.DEAD
@@ -161,6 +213,7 @@ func die() -> void:
 	emit_signal("state_changed", current_state)
 	if sprite:
 		sprite.play("death")
+		sprite.modulate = Color.GRAY
 	set_collision_layer_value(2, false)
 	set_collision_mask_value(3, false)
 	await get_tree().create_timer(2.0).timeout
@@ -168,6 +221,13 @@ func die() -> void:
 
 # ---------- UTILITY ----------
 func attack_player(player: Node2D) -> void:
+	if not _can_attack:
+		return
+	if current_state == State.DEAD or current_state == State.KNOCKED_OUT:
+		return
+	
+	_can_attack = false
+	_attack_cooldown_timer = attack_cooldown
 	if player.has_method("take_damage"):
 		player.take_damage(damage)
 
