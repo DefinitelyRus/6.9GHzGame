@@ -92,8 +92,8 @@ static func load_scene(level_scene: PackedScene) -> void:
 	var level: Node = level_scene.instantiate()
 		
 	unload_level(false)
+	loaded_scene = level
 	instance.theatre.add_child(level)
-	instance.loaded_scene = level
 
 	#Master.instance.background.visible = false
 	return
@@ -101,34 +101,44 @@ static func load_scene(level_scene: PackedScene) -> void:
 
 ### Unloads the currently-loaded level.
 static func unload_level(return_to_main_menu: bool = true) -> void:
-	if instance.loaded_scene == null or instance.theatre.get_child_count() == 0:
+	if loaded_scene == null or instance.theatre.get_child_count() == 0:
 		return
 		
-	instance.theatre.remove_child(instance.loaded_scene)
-	instance.loaded_scene.queue_free()
-	instance.loaded_scene = null
+	instance.theatre.remove_child(loaded_scene)
+	loaded_scene.queue_free()
+	loaded_scene = null
 	
 	if return_to_main_menu:
 		Master.instance.background.visible = true
-		instance.loaded_scene = null
+		loaded_scene = null
 		pass
 	return
 
 
 ### Loads the next level on the levels list.
 static func next_level() -> void:
-	if instance.loaded_scene != null:
-		load_level_from_index(instance.loaded_scene.level_index + 1)
+	if loaded_scene != null:
+		load_level_from_index(loaded_scene.level_index + 1)
 		pass
 	return
 
 
 ### Loads the previous level on the levels list.
 static func previous_level() -> void:
-	if instance.loaded_scene != null:
-		if instance.loaded_scene.level_index == 0:
+	if loaded_scene != null:
+		if loaded_scene.level_index == 0:
 			return
 
-		load_level_from_index(instance.loaded_scene.level_index - 1)
+		load_level_from_index(loaded_scene.level_index - 1)
 		pass
 	return
+
+
+static func get_current_level_as_level() -> Level:
+	Log.me("Getting current level as level...")
+
+	if not loaded_scene is Level:
+		Log.warn("The current loaded scene is a %s" % type_string(typeof(loaded_scene)))
+		return
+	
+	return loaded_scene as Level

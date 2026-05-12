@@ -1,31 +1,37 @@
-[gd_scene format=3 uid="uid://bdqh0nl7c4cxc"]
+[gd_scene format=3 uid="uid://dcrsquh004un6"]
 
-[ext_resource type="Script" uid="uid://b1ftc0s6ov1sw" path="res://scenes/character/player/player.gd" id="1_h6tdw"]
+[ext_resource type="PackedScene" uid="uid://dmj4dn7j2a0lf" path="res://scenes/character/character.tscn" id="1_h6tdw"]
 [ext_resource type="Texture2D" uid="uid://dlwd4yhcgh0r4" path="res://scenes/character/player/ari_idle.png" id="2_4ywt2"]
+[ext_resource type="Script" uid="uid://b1ftc0s6ov1sw" path="res://scenes/character/player/player.gd" id="2_apd2u"]
+[ext_resource type="Script" uid="uid://lxdtntmtxcpn" path="res://scenes/character/player/slingshot_combat.gd" id="3_sfcyi"]
+[ext_resource type="Script" uid="uid://c2x8wa02kff8w" path="res://scenes/character/player/player_animation.gd" id="4_ucfoo"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h6tdw"]
-radius = 7.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sfcyi"]
+radius = 4.0
 height = 24.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sfcyi"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ywt2"]
 atlas = ExtResource("2_4ywt2")
 region = Rect2(0, 0, 16, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ucfoo"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sfcyi"]
 atlas = ExtResource("2_4ywt2")
 region = Rect2(16, 0, 16, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_apd2u"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ucfoo"]
 atlas = ExtResource("2_4ywt2")
 region = Rect2(32, 0, 16, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_puv7k"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_apd2u"]
 atlas = ExtResource("2_4ywt2")
 region = Rect2(48, 0, 16, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_hixpj"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_puv7k"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ywt2")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sfcyi")
 }, {
@@ -34,12 +40,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_apd2u")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_puv7k")
 }],
 "loop": true,
-"name": &"Ari_Idle",
+"name": &"ari_idle",
 "speed": 5.0
 }, {
 "frames": [],
@@ -48,17 +51,36 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D" unique_id=574515454]
-script = ExtResource("1_h6tdw")
-metadata/_custom_type_script = "uid://b1ftc0s6ov1sw"
+[node name="Player" unique_id=244452151 instance=ExtResource("1_h6tdw")]
+script = ExtResource("2_apd2u")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=146762172]
-position = Vector2(0, 3)
-shape = SubResource("CapsuleShape2D_h6tdw")
+[node name="CollisionShape2D" parent="." index="0" unique_id=1115019516]
+shape = SubResource("CapsuleShape2D_sfcyi")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=7720066]
-sprite_frames = SubResource("SpriteFrames_hixpj")
-animation = &"Ari_Idle"
-frame_progress = 0.8913648
+[node name="IRLAnimatedSprite" parent="." index="1" unique_id=504141493]
+position = Vector2(0, -4)
+sprite_frames = SubResource("SpriteFrames_puv7k")
+animation = &"ari_idle"
 
-[node name="CoyoteTimer" type="Timer" parent="." unique_id=447388931]
+[node name="VRAnimatedSprite" type="AnimatedSprite2D" parent="." index="2" unique_id=1660676300]
+position = Vector2(0, -4)
+sprite_frames = SubResource("SpriteFrames_puv7k")
+animation = &"ari_idle"
+
+[node name="CharacterCombat" parent="." index="3" unique_id=1335177334]
+script = ExtResource("3_sfcyi")
+projectile_scene = null
+short_throw_damage = 20.0
+long_throw_damage = 45.0
+short_throw_threshold = 0.5
+long_throw_threshold = 1.0
+short_throw_speed = 600.0
+long_throw_speed = 950.0
+knockback_force = 280.0
+
+[node name="PlayerAnimation" type="Node" parent="." index="4" unique_id=1174329474 node_paths=PackedStringArray("vr_animated_sprite", "irl_animated_sprite")]
+script = ExtResource("4_ucfoo")
+vr_animated_sprite = NodePath("../VRAnimatedSprite")
+irl_animated_sprite = NodePath("../IRLAnimatedSprite")
+
+[node name="CoyoteTimer" type="Timer" parent="." index="5" unique_id=605607861]
