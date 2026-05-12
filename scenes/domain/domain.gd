@@ -10,10 +10,14 @@ var level: Level = null # Set by the Level itself.
 @export var default_layer: int = 0
 
 
+# ---------- DEBUGGING ----------
+@export var log_ready: bool = false
+
+
 
 # ---------- GODOT CALLBACKS ----------
 func _ready() -> void:
-	Log.me("Readying domain %s. Scanning children and properties...")
+	Log.me("Readying domain %s. Scanning children and properties..." % name, log_ready, true)
 
 	if default_layer < 1 or default_layer > 5:
 		Log.err("A domain's default visibility layer should be between 1 to 5 only.", true, false)
@@ -30,5 +34,5 @@ func _ready() -> void:
 		child_2d.visibility_layer = updated_visibility_layer
 		pass
 	
-	Log.me("Done!", true, false)
+	Log.me("Done!", log_ready, false)
 	return
