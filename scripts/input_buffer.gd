@@ -1,3 +1,4 @@
+class_name InputBuffer
 extends Node
 
 @export var default_buffer_time := 50
