@@ -42,7 +42,7 @@ func _update_camera_focus(_delta):
 @onready var camera: CameraManager = CameraManager.instance
 @export var irl_domain: Domain = null
 @export var vr_domain: Domain = null
-var player: Player # NOT YET SET
+var player: Player
 var active_domain: Domain
 var _using_vr_domain: bool = false
 signal domain_switched(target_is_vr: bool)
@@ -106,20 +106,21 @@ func _ready() -> void:
 	Log.me("Readying level %s. Scanning children and properties..." % name)
 
 	if player_spawn_collection == null:
-		Log.err("player_spawn_collection is missing from children; cannot spawn player.", true, false)
-		return
+		Log.warn("player_spawn_collection is missing from children; cannot spawn player.")
+		pass
 
 	if npc_spawn_collection == null:
-		Log.err("npc_spawn_collection is not missing from children; cannot spawn NPCs.", true, false)
-		return
+		Log.warn("npc_spawn_collection is missing from children; cannot spawn NPCs.")
+		pass
 	
 	if enemy_spawn_collection == null:
-		Log.err("enemy_spawn_collection is not missing from children; cannot spawn enemies.", true, false)
-		return
+		Log.warn("enemy_spawn_collection is missing from children; cannot spawn enemies.")
+		pass
 	
 	if camera_focus_collection == null:
-		Log.warn("camera_focus_collection is missing from children; camera may behave unnaturally.", true, false)
+		Log.warn("camera_focus_collection is missing from children; camera may behave unnaturally.")
 		pass
+	
 	else:
 		if camera_focus_collection.get_child_count() > 0:
 			var camera_focus_points: Array[Node2D] = []
@@ -134,32 +135,19 @@ func _ready() -> void:
 		else: camera.set_target_topleft(camera_focus_collection.global_position, true)
 		pass	
 
+	# IRL DOMAIN
 	if irl_domain == null:
-		Log.err("irl_domain is not set; cannot switch to IRL view.", true, false)
-		return
-	
-	else:
-		irl_domain.level = self
-		var world_objects: Array[Node] = irl_domain.world_objects.get_children()
-
-		for character: Character in world_objects:
-			character.current_level = self
-			pass
+		Log.warn("irl_domain is not set; cannot switch to IRL view.")
 		pass
+	
+	else: irl_domain.level = self
 
-
+	# VR DOMAIN
 	if vr_domain == null:
-		Log.err("vr_domain is not set; cannot switch to fantasy view.", true, false)
+		Log.err("vr_domain is not set; cannot switch to fantasy view.")
 		return
 	
-	else:
-		vr_domain.level = self
-		var world_objects: Array[Node] = irl_domain.world_objects.get_children()
-
-		for character: Character in world_objects:
-			character.current_level = self
-			pass
-		pass
+	else: vr_domain.level = self
 
 	Log.me("Done!", log_ready, false)
 	return
