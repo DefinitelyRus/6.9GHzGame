@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dxhalomr2qmah"]
+
+[ext_resource type="Script" uid="uid://carats5quwjd5" path="res://levels/test_level_1/test_level_1.gd" id="1_k1ttk"]
+[ext_resource type="PackedScene" uid="uid://c33lmn6nd2w51" path="res://levels/level_1/domain_irl.tscn" id="2_45440"]
+[ext_resource type="PackedScene" uid="uid://b8kqk1dcp27d2" path="res://levels/level_1/domain_vr.tscn" id="3_epb64"]
+
+[node name="Level" type="Node2D" unique_id=995332509 node_paths=PackedStringArray("irl_domain", "vr_domain")]
+script = ExtResource("1_k1ttk")
+irl_domain = NodePath("Domains/IRL Domain")
+vr_domain = NodePath("Domains/VR Domain")
+
+[node name="PlayerSpawns" type="Node2D" parent="." unique_id=351356759]
+
+[node name="NPCSpawns" type="Node2D" parent="." unique_id=1032858240]
+
+[node name="EnemySpawns" type="Node2D" parent="." unique_id=796843026]
+
+[node name="CameraFocusPoints" type="Node2D" parent="." unique_id=2020549555]
+
+[node name="Domains" type="Node2D" parent="." unique_id=1228790542]
+
+[node name="IRL Domain" parent="Domains" unique_id=1073536569 instance=ExtResource("2_45440")]
+
+[node name="VR Domain" parent="Domains" unique_id=1028950996 instance=ExtResource("3_epb64")]
