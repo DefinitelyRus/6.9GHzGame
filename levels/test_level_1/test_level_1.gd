@@ -3,18 +3,21 @@ extends Level
 
 func _ready() -> void:
 	super._ready()
-	
-	var player: Player = irl_domain.world_objects.get_child(0) as Player
-	#Log.me("Setting %s as the target..." % player.name)
-	set_camera_focus(player, true, true)
-	#camera.set_target_centered(player.global_position)
-	pass
+	_setup_initial_camera_focus()
+	return
 
 
 func _process(delta) -> void:
 	super._process(delta)
-	
-	# var player: Player = irl_domain.world_objects.get_child(0) as Player
-	# Log.me("Focusing on %s" % player.name)
-	# camera.set_target_centered(player.global_position)
+	return
+
+
+func _setup_initial_camera_focus() -> void:
+	Log.me("Player exists: %s" % str(player != null))
+
+	if not is_instance_valid(player):
+		Log.err("Could not find 'Player' node to set initial camera focus.")
+		return
+
+	set_camera_focus(player, true, true)
 	return

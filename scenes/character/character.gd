@@ -2,7 +2,7 @@ class_name Character
 extends CharacterBody2D
 
 # ---------- COMPONENTS ----------
-var current_level: Level # Set by the level itself
+var current_level: Level
 
 @export_group("Movement")
 @export var speed: float = 130.0
@@ -23,22 +23,28 @@ var jump_intent: bool = false
 var camera: CameraManager = CameraManager.instance
 
 # ---------- GODOT CALLBACKS ----------
+func _enter_tree() -> void:
+	Log.me("Character %s has entered the tree.")
+	current_level = SceneLoader.get_current_level_as_level()
+	Log.me("Done!")
+	return
+
 func _ready() -> void:
 	Log.me("Readying character %s. Scanning children and properties..." % name)
 
 	if coyote_timer == null:
-		Log.warn("coyote_timer is missing from children; coyote jump won't work.", true, false)
+		Log.warn("coyote_timer is missing from children; coyote jump won't work.")
 		pass
 
 	if combat_handler == null:
-		Log.warn("combat_handler is missing from children; combat won't work.", true, false)
+		Log.warn("combat_handler is missing from children; combat won't work.")
 		pass
 
 	if camera == null:
-		Log.warn("camera is missing; screen shake won't work.", true, false)
+		Log.warn("camera is missing; screen shake won't work.")
 		pass
 
-	Log.me("Done!", true, false)
+	Log.me("Done!")
 	return
 
 

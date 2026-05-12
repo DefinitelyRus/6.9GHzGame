@@ -1,3 +1,21 @@
 [gd_scene format=3 uid="uid://dmj4dn7j2a0lf"]
 
+[ext_resource type="Script" uid="uid://capt4i3d53h7e" path="res://scenes/character/character.gd" id="1_6nn2t"]
+[ext_resource type="Script" uid="uid://5fjly2ul66tm" path="res://scenes/character/character_combat.gd" id="2_cuyo6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cuyo6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6nn2t"]
+
 [node name="Character" type="CharacterBody2D" unique_id=244452151]
+script = ExtResource("1_6nn2t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1115019516]
+shape = SubResource("CapsuleShape2D_cuyo6")
+
+[node name="IRLAnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=504141493]
+sprite_frames = SubResource("SpriteFrames_6nn2t")
+
+[node name="CharacterCombat" type="Node2D" parent="." unique_id=1335177334]
+script = ExtResource("2_cuyo6")
+log_ready = true
