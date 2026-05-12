@@ -14,7 +14,9 @@ var facing_direction: int = 1
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var coyote_timer: Timer = $CoyoteTimer
-@onready var combat_manager: CombatManager = $CombatManager #something something
+#@onready var combat_manager: CombatManager = $CombatManager #something something
+var combat_manager = null
+var input_buffer: InputBuffer = null
 @onready var camera: Camera2D = $Camera2D
 
 
@@ -47,7 +49,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0 , friction * delta)
 		
 	
-	if InputBuffer.consume("jump") and (is_on_floor() or not coyote_timer.is_stopped()):
+	if input_buffer.consume("jump") and (is_on_floor() or not coyote_timer.is_stopped()):
 		velocity.y = JUMP_VELOCITY
 		camera.apply_shake(5.0)
 		coyote_timer.stop()
@@ -90,7 +92,7 @@ func update_animation():
 			
 func _input(event):
 	if Input.is_action_just_pressed("jump"):
-		InputBuffer.buffer_action("jump")
+		input_buffer.buffer_action("jump")
 	
 func get_facing_direction() -> int:
 	return facing_direction
