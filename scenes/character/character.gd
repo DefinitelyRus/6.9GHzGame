@@ -1,6 +1,9 @@
 class_name Character
 extends CharacterBody2D
 
+# ---------- COMPONENTS ----------
+var current_level: Level # Set by the level itself
+
 @export_group("Movement")
 @export var speed: float = 130.0
 @export var acceleration: float = 1000.0
