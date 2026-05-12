@@ -2,31 +2,11 @@ class_name CharacterAnimation
 extends Node
 
 @export var character: Character
-@export var animated_sprite: AnimatedSprite2D
+@export var irl_animated_sprite: AnimatedSprite2D
+@export var vr_animated_sprite: AnimatedSprite2D
 
 
-func _ready() -> void:
-	Log.me("Readying character animation %s. Scanning properties..." % name)
-	_resolve_dependencies()
-
-	if character == null:
-		Log.err("character is missing; animation won't work.", true, false)
-		return
-
-	if animated_sprite == null:
-		Log.warn("AnimatedSprite2D missing; animations won't work.", true, false)
-		pass
-
-	Log.me("Done!", true, false)
-	return
-
-
-func _process(_delta: float) -> void:
-	_update_facing_direction()
-	_update_animation_state()
-	return
-
-
+# ---------- ANIMATION HANDLING ----------
 func _resolve_dependencies() -> void:
 	if character == null: character = get_parent() as Character
 		
@@ -60,4 +40,31 @@ func _update_animation_state() -> void:
 	if not character.is_on_floor(): animated_sprite.play("Jump")
 	elif abs(character.velocity.x) > 10.0: animated_sprite.play("Run")
 	else: animated_sprite.play("Idle")
+	return
+
+
+# ---------- GODOT CALLBACKS ----------
+func _ready() -> void:
+	Log.me("Readying character animation %s. Scanning properties..." % name)
+	_resolve_dependencies()
+
+	if character == null:
+		Log.err("character is missing; animation won't work.")
+		return
+
+	if irl_animated_sprite == null:
+		Log.warn("irl_animated_sprite missing; IRL animations won't work.")
+		pass
+
+	if vr_animated_sprite == null:
+		Log.warn("vr_animated_sprite missing; VR animations won't work.")
+		pass
+
+	Log.me("Done!")
+	return
+
+
+func _process(_delta: float) -> void:
+	_update_facing_direction()
+	_update_animation_state()
 	return
