@@ -56,10 +56,12 @@ static func message(msg: String, mode: Mode, print_trace: bool) -> void:
 					pass
 					
 				Mode.WARNING:
+					print(final_msg)
 					push_warning(final_msg)
 					pass
 					
 				Mode.ERROR:
+					printerr(final_msg)
 					push_error(final_msg)
 					pass
 			pass
@@ -154,9 +156,11 @@ static func _print_fallback(msg: String, mode: Mode) -> void:
 			print(msg)
 			pass
 		Mode.WARNING:
+			print(msg)
 			push_warning(msg)
 			pass
 		Mode.ERROR:
+			printerr(msg)
 			push_error(msg)
 			pass
 			
