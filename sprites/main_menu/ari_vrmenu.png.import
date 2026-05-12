@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d00wos6p8sw3q"
-path="res://.godot/imported/Tileset_1.png-f9e34c5de090900ffb9d13a298beafa8.ctex"
+uid="uid://chufo7lay2vmm"
+path="res://.godot/imported/ari_vrmenu.png-b3f85cd067fc61fa4cdd799947b2e6b6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://levels/Tileset_1.png"
-dest_files=["res://.godot/imported/Tileset_1.png-f9e34c5de090900ffb9d13a298beafa8.ctex"]
+source_file="res://sprites/main_menu/ari_vrmenu.png"
+dest_files=["res://.godot/imported/ari_vrmenu.png-b3f85cd067fc61fa4cdd799947b2e6b6.ctex"]
 
 [params]
 

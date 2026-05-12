@@ -1,6 +1,13 @@
 class_name Player
 extends Character
 
+func _enter_tree() -> void:
+	Log.me("Player %s has entered the tree.")
+	super._enter_tree()
+	current_level.player = self
+	Log.me("Done!")
+	return
+
 func _ready() -> void:
 	Log.me("Readying player %s. Scanning properties..." % name)
 	super._ready()

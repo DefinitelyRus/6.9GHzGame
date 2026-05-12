@@ -5,7 +5,7 @@ class_name InputManager
 extends Node
 
 # ---------- COMPONENTS ----------
-static var instance: InputManager
+static var instance: InputManager = null
 
 # ---------- DEBUGGING ----------
 @export_group("Debugging")
@@ -18,7 +18,7 @@ static var allow_override: bool = true
 var _exit_hold_timer: float = 0.0
 
 static var buffered_actions: Dictionary = {}
-static var default_buffer_time: float = 0.2
+static var default_buffer_time: float = 0.3
 
 # ---------- CONSTANTS ----------
 const MOVE_LEFT: String = "move_left"
@@ -29,6 +29,7 @@ const JUMP: String = "jump"
 const DASH: String = "dash"
 const ATTACK: String = "attack"
 const INTERACT: String = "interact"
+const SWITCH_DOMAIN: String = "switch_domain"
 const CANCEL: String = "cancel"
 const PAUSE: String = "pause"
 
@@ -38,11 +39,12 @@ static var is_jumping: bool = false
 static var is_dashing: bool = false
 static var is_attacking: bool = false
 static var is_interacting: bool = false
+static var is_switching_domain: bool = false
 
 # ---------- GODOT CALLBACKS ----------
 func _enter_tree() -> void:
 	if instance != null:
-		Log.err("Multiple instances of InputManager detected.")
+		Log.err("Existing instance of InputManager detected.")
 		queue_free()
 		return
 
@@ -98,13 +100,13 @@ func _update_gameplay_inputs() -> void:
 	
 	var left: float = Input.get_action_strength(MOVE_LEFT)
 	var right: float = Input.get_action_strength(MOVE_RIGHT)
-	var up: float = Input.get_action_strength(MOVE_UP)
-	var down: float = Input.get_action_strength(MOVE_DOWN)
+	#var up: float = Input.get_action_strength(MOVE_UP)
+	#var down: float = Input.get_action_strength(MOVE_DOWN)
 	
 	var x_axis: float = right - left
-	var y_axis: float = down - up
+	#var y_axis: float = down - up
 	
-	move_vector = Vector2(x_axis, y_axis)
+	move_vector = Vector2(x_axis, 0)
 	
 	is_jumping = Input.is_action_just_pressed(JUMP)
 	if is_jumping: buffer_action(JUMP)
@@ -117,6 +119,9 @@ func _update_gameplay_inputs() -> void:
 		
 	is_interacting = Input.is_action_just_pressed(INTERACT)
 	if is_interacting: buffer_action(INTERACT)
+
+	is_switching_domain = Input.is_action_just_pressed(SWITCH_DOMAIN)
+	if is_switching_domain: buffer_action(SWITCH_DOMAIN)
 		
 	return
 
