@@ -2,7 +2,7 @@ class_name DataManager
 extends Node
 
 # ---------- COMPONENTS ----------
-@onready var instance: DataManager = self
+static var instance: DataManager = null
 
 # ---------- DEBUGGING ----------
 @export var log_ready: bool = false
@@ -243,5 +243,14 @@ static func read_file(file_name: String) -> String:
 
 
 # ---------- GODOT CALLBACKS ----------
-func _ready() -> void:
-	pass
+func _enter_tree() -> void:
+	Log.me("A DataManager has entered the tree. Scanning...")
+
+	if instance != null:
+		Log.err("Existing instance of CameraManager detected.")
+		queue_free()
+		return
+	
+	instance = self
+
+	return
