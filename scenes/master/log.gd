@@ -56,10 +56,12 @@ static func message(msg: String, mode: Mode, print_trace: bool) -> void:
 					pass
 					
 				Mode.WARNING:
+					print(final_msg)
 					push_warning(final_msg)
 					pass
 					
 				Mode.ERROR:
+					printerr(final_msg)
 					push_error(final_msg)
 					pass
 			pass
@@ -134,9 +136,11 @@ static func _get_relevant_frames(stack: Array[Dictionary]) -> Array[Dictionary]:
 	for frame: Dictionary in stack:
 		var source: String = frame.source as String
 		var is_empty: bool = source.is_empty()
-		var ends_with_log: bool = source.ends_with("Log.gd")
+		var file_name: String = source.get_file()
+		var lower_name: String = file_name.to_lower()
+		var is_log: bool = lower_name == "log.gd"
 
-		var should_skip: bool = is_empty or ends_with_log
+		var should_skip: bool = is_empty or is_log
 		if should_skip:
 			continue
 
@@ -152,9 +156,11 @@ static func _print_fallback(msg: String, mode: Mode) -> void:
 			print(msg)
 			pass
 		Mode.WARNING:
+			print(msg)
 			push_warning(msg)
 			pass
 		Mode.ERROR:
+			printerr(msg)
 			push_error(msg)
 			pass
 			
