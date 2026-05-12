@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://ccl0px43jq2fx" path="res://scenes/master/scene_loader.gd" id="6_5seyr"]
 [ext_resource type="Script" uid="uid://csy1ot0r3dxsr" path="res://scenes/master/ui_manager.gd" id="7_08ffl"]
 [ext_resource type="PackedScene" uid="uid://cx22l4o46fvh4" path="res://levels/test_level_1/test_domain_irl.tscn" id="7_11v8m"]
+[ext_resource type="PackedScene" uid="uid://bbspeyo6f380t" path="res://levels/test_level_1/test_level_1.tscn" id="8_6ch72"]
 
 [node name="Master" type="Node" unique_id=1279454520]
 script = ExtResource("1_kwmx6")
@@ -18,7 +19,6 @@ script = ExtResource("2_2uhh1")
 metadata/_custom_type_script = "uid://c4rkccp6ak2x5"
 
 [node name="CameraManager" type="Camera2D" parent="." unique_id=286161255]
-visible = false
 script = ExtResource("3_bftpt")
 metadata/_custom_type_script = "uid://dd51ctrt8wuhi"
 
@@ -37,7 +37,7 @@ metadata/_custom_type_script = "uid://cnspsgxn1mmh5"
 [node name="SceneLoader" type="Node" parent="." unique_id=1231278414 node_paths=PackedStringArray("theatre")]
 script = ExtResource("6_5seyr")
 theatre = NodePath("../Theatre")
-dev_scene = ExtResource("7_11v8m")
+dev_scene = ExtResource("8_6ch72")
 levels = Array[PackedScene]([ExtResource("7_11v8m")])
 metadata/_custom_type_script = "uid://ccl0px43jq2fx"
 
