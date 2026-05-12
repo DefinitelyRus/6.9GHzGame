@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://2pd6on4smpfk"]
+
+[ext_resource type="Script" uid="uid://d0mtktah8vxed" path="res://scenes/level/level.gd" id="1_h3e3j"]
+
+[node name="Level" type="Node2D" unique_id=48196902]
+script = ExtResource("1_h3e3j")
+
+[node name="PlayerSpawns" type="Node2D" parent="." unique_id=612346127]
+
+[node name="NPCSpawns" type="Node2D" parent="." unique_id=1256209799]
+
+[node name="EnemySpawns" type="Node2D" parent="." unique_id=895681996]
+
+[node name="CameraFocusPoints" type="Node2D" parent="." unique_id=1499352802]
+
+[node name="Domains" type="Node2D" parent="." unique_id=404266629]

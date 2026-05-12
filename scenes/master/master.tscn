@@ -1,6 +1,48 @@
 [gd_scene format=3 uid="uid://dclg7ki5h2j0h"]
 
-[ext_resource type="Script" uid="uid://d0hdg2k6ics5k" path="res://scenes/master/master.gd" id="1_kwmx6"]
+[ext_resource type="Script" uid="uid://c8uhklnkmv0xj" path="res://scenes/master/master.gd" id="1_kwmx6"]
+[ext_resource type="Script" uid="uid://c4rkccp6ak2x5" path="res://scenes/master/audio_manager.gd" id="2_2uhh1"]
+[ext_resource type="Script" uid="uid://cqqls3xnoi53e" path="res://scenes/master/data_manager.gd" id="3_11v8m"]
+[ext_resource type="Script" uid="uid://dd51ctrt8wuhi" path="res://scenes/master/camera_manager.gd" id="3_bftpt"]
+[ext_resource type="Script" uid="uid://bmp6v85rtgjts" path="res://scenes/master/input_manager.gd" id="4_bftpt"]
+[ext_resource type="Script" uid="uid://cnspsgxn1mmh5" path="res://scenes/master/log.gd" id="5_6ch72"]
+[ext_resource type="Script" uid="uid://ccl0px43jq2fx" path="res://scenes/master/scene_loader.gd" id="6_5seyr"]
+[ext_resource type="Script" uid="uid://csy1ot0r3dxsr" path="res://scenes/master/ui_manager.gd" id="7_08ffl"]
+[ext_resource type="PackedScene" uid="uid://cx22l4o46fvh4" path="res://levels/test_level_1/test_domain_irl.tscn" id="7_11v8m"]
+[ext_resource type="PackedScene" uid="uid://bbspeyo6f380t" path="res://levels/test_level_1/test_level_1.tscn" id="8_6ch72"]
 
 [node name="Master" type="Node" unique_id=1279454520]
 script = ExtResource("1_kwmx6")
+
+[node name="AudioManager" type="Node2D" parent="." unique_id=31993522]
+script = ExtResource("2_2uhh1")
+metadata/_custom_type_script = "uid://c4rkccp6ak2x5"
+
+[node name="CameraManager" type="Camera2D" parent="." unique_id=286161255]
+script = ExtResource("3_bftpt")
+metadata/_custom_type_script = "uid://dd51ctrt8wuhi"
+
+[node name="DataManager" type="Node" parent="." unique_id=1954891706]
+script = ExtResource("3_11v8m")
+metadata/_custom_type_script = "uid://cqqls3xnoi53e"
+
+[node name="InputManager" type="Node" parent="." unique_id=790059567]
+script = ExtResource("4_bftpt")
+metadata/_custom_type_script = "uid://bmp6v85rtgjts"
+
+[node name="Log" type="Node" parent="." unique_id=240077174]
+script = ExtResource("5_6ch72")
+metadata/_custom_type_script = "uid://cnspsgxn1mmh5"
+
+[node name="SceneLoader" type="Node" parent="." unique_id=1231278414 node_paths=PackedStringArray("theatre")]
+script = ExtResource("6_5seyr")
+theatre = NodePath("../Theatre")
+dev_scene = ExtResource("8_6ch72")
+levels = Array[PackedScene]([ExtResource("7_11v8m")])
+metadata/_custom_type_script = "uid://ccl0px43jq2fx"
+
+[node name="Theatre" type="Node" parent="." unique_id=1381566111]
+
+[node name="UIManager" type="CanvasLayer" parent="." unique_id=840740402]
+script = ExtResource("7_08ffl")
+metadata/_custom_type_script = "uid://csy1ot0r3dxsr"

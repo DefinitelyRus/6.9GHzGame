@@ -1,0 +1,122 @@
+class_name Level
+extends Node2D
+
+# ---------- COMPONENTS ----------
+## The parent node of child nodes indicating the position of player spawn points.
+@onready var player_spawn_collection: Node2D = $PlayerSpawns
+## The parent node of child nodes indicating the position of NPC spawn points.
+## Even though the Level owns this, the NPCs can exist in either the real or fantasy domains.
+@onready var npc_spawn_collection: Node2D = $NPCSpawns
+## The parent node of child nodes indicating the position of enemy spawn points.
+## Even though the Level owns this, the enemies will only exist in the real domain.
+@onready var enemy_spawn_collection: Node2D = $EnemySpawns
+## The parent node of child nodes indicating the position of camera focus points.
+@onready var camera_focus_collection: Node2D = $CameraFocusPoints
+
+
+
+# ---------- CAMERA CONTROL ----------
+var _camera_target_node: Node2D = null
+func set_camera_focus(node: Node2D, instant: bool = false, track: bool = false) -> void:
+	if node == null:
+		Log.err("The provided node must not be null.", true, true)
+		return
+	
+	Log.me("Focusing camera on node %s (x=%d y=%d)...")
+	camera.set_target_centered(node.global_position, instant)
+	if track: _camera_target_node = node
+
+	Log.me("Done!")
+	return
+
+
+func _update_camera_focus(_delta):
+	if _camera_target_node == null: return
+	camera.set_target_centered(_camera_target_node.global_position, false)
+	return
+
+
+
+# ----- DOMAIN CONTROL -----
+@export_group("Domains")
+@onready var camera: CameraManager = CameraManager.instance
+@export var irl_domain: Domain = null
+@export var vr_domain: Domain = null
+var active_domain: Domain
+var _using_vr_domain: bool = false
+
+
+## Sets the active domain to the fantasy domain.
+func set_domain_view(use_vr_domain: bool) -> void:
+	if use_vr_domain:
+		vr_domain.set_enabled(true)
+		irl_domain.set_enabled(false)
+		active_domain = vr_domain
+		pass
+
+	else:
+		vr_domain.set_enabled(false)
+		irl_domain.set_enabled(true)
+		active_domain = irl_domain
+		pass
+
+	_using_vr_domain = use_vr_domain
+	return
+
+
+
+# ---------- DEBUGGING ----------
+@export_group("Debugging")
+@export var log_ready: bool = true
+@export var log_calls: bool = true
+
+
+
+# ---------- GODOT CALLBACKS ----------
+func _ready() -> void:
+	Log.me("Readying level %s. Scanning children and properties..." % name)
+
+	if player_spawn_collection == null:
+		Log.err("player_spawn_collection is missing from children; cannot spawn player.", true, false)
+		return
+
+	if npc_spawn_collection == null:
+		Log.err("npc_spawn_collection is not missing from children; cannot spawn NPCs.", true, false)
+		return
+	
+	if enemy_spawn_collection == null:
+		Log.err("enemy_spawn_collection is not missing from children; cannot spawn enemies.", true, false)
+		return
+	
+	if camera_focus_collection == null:
+		Log.warn("camera_focus_collection is missing from children; camera may behave unnaturally.", true, false)
+		pass
+	else:
+		if camera_focus_collection.get_child_count() > 0:
+			var camera_focus_points: Array[Node2D] = []
+			camera_focus_points.assign(camera_focus_collection.get_children())
+
+			if camera_focus_points.size() > 0:
+				var first_focus: Node2D = camera_focus_points[0]
+				camera.set_target_topleft(first_focus.global_position, true)
+				pass
+			pass
+
+		else: camera.set_target_topleft(camera_focus_collection.global_position, true)
+		pass	
+
+	if irl_domain == null:
+		Log.err("irl_domain is not set; cannot switch to IRL view.", true, false)
+		return
+
+	if vr_domain == null:
+		Log.err("vr_domain is not set; cannot switch to fantasy view.", true, false)
+		return
+
+	Log.me("Done!", log_ready, false)
+	return
+
+
+func _process(delta) -> void:
+	_update_camera_focus(delta)
+	return
