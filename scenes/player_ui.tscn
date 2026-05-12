@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://babpm5rklbblr"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_guxnq"]
+
+[node name="PlayerUI" type="Control" unique_id=1949042988]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HUD" type="MarginContainer" parent="." unique_id=954386827]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD" unique_id=1507918765]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Module1" type="Button" parent="HUD/HBoxContainer" unique_id=1880294710]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Module2" type="Button" parent="HUD/HBoxContainer" unique_id=371008989]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Module3" type="Button" parent="HUD/HBoxContainer" unique_id=556861011]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Module4" type="Button" parent="HUD/HBoxContainer" unique_id=123218952]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Popup" type="MarginContainer" parent="." unique_id=1046536376]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Popup" unique_id=266212340]
+custom_minimum_size = Vector2(512, 256)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("CompressedTexture2D_guxnq")
