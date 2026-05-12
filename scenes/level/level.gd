@@ -42,27 +42,56 @@ func _update_camera_focus(_delta):
 @onready var camera: CameraManager = CameraManager.instance
 @export var irl_domain: Domain = null
 @export var vr_domain: Domain = null
+var player: Player # NOT YET SET
 var active_domain: Domain
 var _using_vr_domain: bool = false
+signal domain_switched(target_is_vr: bool)
+
 
 
 ## Sets the active domain to the fantasy domain.
 func set_domain_view(use_vr_domain: bool) -> void:
+
+	# VR view
 	if use_vr_domain:
+		# TODO: Hide/show all objects except Player
 		vr_domain.set_enabled(true)
 		irl_domain.set_enabled(false)
 		active_domain = vr_domain
+
+		# TODO: Switch the player animated sprite to VR
+
+		# TODO: Fade-out all IRL audio
+
 		pass
 
+	# IRL view
 	else:
+		# TODO: Hide/show all objects except Player
 		vr_domain.set_enabled(false)
 		irl_domain.set_enabled(true)
 		active_domain = irl_domain
+
+		# TODO: Switch the player animated sprite to IRL
+
+		# TODO: Fade-out all VR audio
+
 		pass
 
 	_using_vr_domain = use_vr_domain
+	domain_switched.emit(use_vr_domain)
 	return
 
+
+## Scans if the player has triggered a domain switch.
+func _check_domain_switch_trigger(_delta) -> void:
+	var should_switch: bool = InputManager.consume_action(InputManager.SWITCH_DOMAIN)
+	if should_switch:
+		var target_domain: bool = not _using_vr_domain
+		domain_switched.emit(target_domain)
+		set_domain_view(target_domain)
+		pass
+	return
 
 
 # ---------- DEBUGGING ----------
@@ -108,10 +137,29 @@ func _ready() -> void:
 	if irl_domain == null:
 		Log.err("irl_domain is not set; cannot switch to IRL view.", true, false)
 		return
+	
+	else:
+		irl_domain.level = self
+		var world_objects: Array[Node] = irl_domain.world_objects.get_children()
+
+		for character: Character in world_objects:
+			character.current_level = self
+			pass
+		pass
+
 
 	if vr_domain == null:
 		Log.err("vr_domain is not set; cannot switch to fantasy view.", true, false)
 		return
+	
+	else:
+		vr_domain.level = self
+		var world_objects: Array[Node] = irl_domain.world_objects.get_children()
+
+		for character: Character in world_objects:
+			character.current_level = self
+			pass
+		pass
 
 	Log.me("Done!", log_ready, false)
 	return
@@ -119,4 +167,5 @@ func _ready() -> void:
 
 func _process(delta) -> void:
 	_update_camera_focus(delta)
+	_check_domain_switch_trigger(delta)
 	return
