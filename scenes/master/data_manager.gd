@@ -4,6 +4,7 @@ extends Node
 # ---------- COMPONENTS ----------
 static var instance: DataManager = null
 
+
 # ---------- DEBUGGING ----------
 @export var log_ready: bool = false
 
