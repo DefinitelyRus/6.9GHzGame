@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bbspeyo6f380t"]
+
+[ext_resource type="PackedScene" uid="uid://2pd6on4smpfk" path="res://scenes/level/level.tscn" id="1_2mxjr"]
+[ext_resource type="PackedScene" uid="uid://cx22l4o46fvh4" path="res://levels/test_level_1/test_domain_irl.tscn" id="2_j0ijh"]
+[ext_resource type="PackedScene" uid="uid://cw8venc8ywqse" path="res://levels/test_level_1/test_domain_vr.tscn" id="3_pj551"]
+
+[node name="Level" unique_id=48196902 node_paths=PackedStringArray("real_domain", "fantasy_domain") instance=ExtResource("1_2mxjr")]
+real_domain = NodePath("Domains/IRL Domain")
+fantasy_domain = NodePath("Domains/VR Domain")
+
+[node name="IRL Domain" parent="Domains" parent_id_path=PackedInt32Array(404266629) index="0" unique_id=1073536569 instance=ExtResource("2_j0ijh")]
+
+[node name="VR Domain" parent="Domains" parent_id_path=PackedInt32Array(404266629) index="1" unique_id=2049378256 instance=ExtResource("3_pj551")]
