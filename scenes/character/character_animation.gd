@@ -43,9 +43,14 @@ func _update_animation_state() -> void:
 	return
 
 
+# ---------- DEBUGGING ----------
+@export_group("Debugging")
+@export var log_ready: bool = false
+
+
 # ---------- GODOT CALLBACKS ----------
 func _ready() -> void:
-	Log.me("Readying character animation %s. Scanning properties..." % name)
+	Log.me("Readying character animation %s. Scanning properties..." % name, log_ready)
 	_resolve_dependencies()
 
 	if character == null:
@@ -60,7 +65,7 @@ func _ready() -> void:
 		Log.warn("vr_animated_sprite missing; VR animations won't work.")
 		pass
 
-	Log.me("Done!")
+	Log.me("Done!", log_ready)
 	return
 
 
