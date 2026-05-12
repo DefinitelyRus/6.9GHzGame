@@ -22,4 +22,3 @@ vr_domain = NodePath("Domains/VR Domain")
 [node name="IRL Domain" parent="Domains" unique_id=1073536569 instance=ExtResource("2_45440")]
 
 [node name="VR Domain" parent="Domains" unique_id=1028950996 instance=ExtResource("3_epb64")]
-visible = false
