@@ -39,6 +39,7 @@ script = ExtResource("6_5seyr")
 theatre = NodePath("../Theatre")
 dev_scene = ExtResource("8_6ch72")
 levels = Array[PackedScene]([ExtResource("7_11v8m")])
+log_ready = true
 metadata/_custom_type_script = "uid://ccl0px43jq2fx"
 
 [node name="Theatre" type="Node" parent="." unique_id=1381566111]
