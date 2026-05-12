@@ -41,9 +41,11 @@ func use_fantasy_domain(enable: bool) -> void:
 	return
 
 
+
 # ---------- DEBUGGING ----------
 @export_group("Debugging")
 @export var log_ready: bool = true
+
 
 
 # ---------- GODOT CALLBACKS ----------

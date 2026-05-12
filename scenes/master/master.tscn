@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://cnspsgxn1mmh5" path="res://scenes/master/log.gd" id="5_6ch72"]
 [ext_resource type="Script" uid="uid://ccl0px43jq2fx" path="res://scenes/master/scene_loader.gd" id="6_5seyr"]
 [ext_resource type="Script" uid="uid://csy1ot0r3dxsr" path="res://scenes/master/ui_manager.gd" id="7_08ffl"]
+[ext_resource type="PackedScene" uid="uid://cx22l4o46fvh4" path="res://levels/test_domain.tscn" id="7_11v8m"]
 
 [node name="Master" type="Node" unique_id=1279454520]
 script = ExtResource("1_kwmx6")
@@ -27,9 +28,14 @@ metadata/_custom_type_script = "uid://bmp6v85rtgjts"
 script = ExtResource("5_6ch72")
 metadata/_custom_type_script = "uid://cnspsgxn1mmh5"
 
-[node name="SceneLoader" type="Node" parent="." unique_id=1231278414]
+[node name="SceneLoader" type="Node" parent="." unique_id=1231278414 node_paths=PackedStringArray("theatre")]
 script = ExtResource("6_5seyr")
+theatre = NodePath("../Theatre")
+dev_scene = ExtResource("7_11v8m")
+levels = Array[PackedScene]([ExtResource("7_11v8m")])
 metadata/_custom_type_script = "uid://ccl0px43jq2fx"
+
+[node name="Theatre" type="Node" parent="." unique_id=1381566111]
 
 [node name="UIManager" type="CanvasLayer" parent="." unique_id=840740402]
 script = ExtResource("7_08ffl")
