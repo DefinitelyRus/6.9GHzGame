@@ -117,6 +117,6 @@ func _ready() -> void:
 	return
 
 
-func _update(delta) -> void:
+func _process(delta) -> void:
 	_update_camera_focus(delta)
 	return

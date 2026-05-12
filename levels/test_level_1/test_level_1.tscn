@@ -9,6 +9,8 @@
 script = ExtResource("2_pj551")
 irl_domain = NodePath("Domains/IRL Domain")
 vr_domain = NodePath("Domains/VR Domain")
+log_ready = null
+log_calls = null
 
 [node name="IRL Domain" parent="Domains" parent_id_path=PackedInt32Array(404266629) index="0" unique_id=1073536569 instance=ExtResource("2_j0ijh")]
 log_ready = true
