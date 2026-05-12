@@ -5,7 +5,7 @@ class_name InputManager
 extends Node
 
 # ---------- COMPONENTS ----------
-static var instance: InputManager
+static var instance: InputManager = null
 
 # ---------- DEBUGGING ----------
 @export_group("Debugging")
@@ -42,7 +42,7 @@ static var is_interacting: bool = false
 # ---------- GODOT CALLBACKS ----------
 func _enter_tree() -> void:
 	if instance != null:
-		Log.err("Multiple instances of InputManager detected.")
+		Log.err("Existing instance of InputManager detected.")
 		queue_free()
 		return
 

@@ -16,7 +16,7 @@ static var instance: UIManager = null
 # ---------- GODOT CALLBACKS ----------
 func _enter_tree() -> void:
 	if instance != null:
-		Log.err("Multiple instances of SceneLoader detected. There should only be one SceneLoader in the scene.")
+		Log.err("Existing instance of UIManager detected.")
 		queue_free()
 		return
 		
