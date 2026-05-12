@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://hn2kdiggldqp" path="res://scenes/domain/domain.tscn" id="1_d7pa8"]
 [ext_resource type="Texture2D" uid="uid://d00wos6p8sw3q" path="res://levels/test_level_1/Tileset_1.png" id="2_tgm6k"]
-[ext_resource type="PackedScene" uid="uid://bdqh0nl7c4cxc" path="res://scenes/character/player/player.tscn" id="3_mfq66"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kpki1"]
 texture = ExtResource("2_tgm6k")
@@ -245,6 +244,7 @@ texture = ExtResource("2_tgm6k")
 sources/0 = SubResource("TileSetAtlasSource_uaa8q")
 
 [node name="VR Domain" unique_id=1073536569 instance=ExtResource("1_d7pa8")]
+visible = false
 default_layer = 2
 
 [node name="Ground" type="TileMapLayer" parent="TileMaps" parent_id_path=PackedInt32Array(1044524471) index="0" unique_id=521334431]
@@ -254,6 +254,3 @@ tile_set = SubResource("TileSet_mfcrk")
 [node name="Background_Prop" type="TileMapLayer" parent="TileMaps" parent_id_path=PackedInt32Array(1044524471) index="1" unique_id=1527364535]
 tile_map_data = PackedByteArray("AAAGABgAAAAJAAoAAAAGABkAAAAJAAsAAAAGABoAAAAJAAwAAAACABYAAAAFAAgAAAADABYAAAAGAAgAAAAEABYAAAAHAAgAAAAFABYAAAAIAAgAAAAGABYAAAAJAAgAAAAAABYAAAADAAgAAAABABYAAAAEAAgAAAAGABcAAAAJAAkAAAAHABYAAAACAAgAAAAIABYAAAADAAgAAAAJABYAAAAEAAgAAAAKABYAAAAFAAgAAAALABYAAAAGAAgAAAAMABYAAAAHAAgAAAANABYAAAAIAAgAAAAOABYAAAAJAAgAAAAOABcAAAAJAAkAAAAOABgAAAAJAAoAAAAOABkAAAAJAAsAAAAOABoAAAAJAAwAAAACABgAAAACAAoAAAACABkAAAACAAsAAAACABoAAAACAAwAAAAQABgAAAACAAoAAAAQABkAAAACAAsAAAAQABoAAAACAAwAAAAtABoAAAAFAAkAAAAuABoAAAAGAAkAAAAvABoAAAAHAAkAAAAwABoAAAAIAAkAAAAxABoAAAAGAAkAAAAyABoAAAAHAAkAAAAzABoAAAAIAAkAAAA0ABoAAAAGAAkAAAA1ABoAAAAHAAkAAAA2ABoAAAAIAAkAAAA3ABoAAAAGAAoAAAA6ABgAAAACAAoAABA6ABkAAAACAAsAABA6ABoAAAACAAwAABBGABgAAAADAAoAAABGABkAAAADAAsAAABHABgAAAAEAAoAAABHABkAAAAEAAsAAABHABoAAAAEAAwAAAA=")
 tile_set = SubResource("TileSet_kpki1")
-
-[node name="Player" parent="." index="2" unique_id=574515454 instance=ExtResource("3_mfq66")]
-position = Vector2(48, 412)
