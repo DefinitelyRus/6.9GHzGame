@@ -18,7 +18,7 @@ static var allow_override: bool = true
 var _exit_hold_timer: float = 0.0
 
 static var buffered_actions: Dictionary = {}
-static var default_buffer_time: float = 0.2
+static var default_buffer_time: float = 0.3
 
 # ---------- CONSTANTS ----------
 const MOVE_LEFT: String = "move_left"
@@ -29,6 +29,7 @@ const JUMP: String = "jump"
 const DASH: String = "dash"
 const ATTACK: String = "attack"
 const INTERACT: String = "interact"
+const SWITCH_DOMAIN: String = "switch_domain"
 const CANCEL: String = "cancel"
 const PAUSE: String = "pause"
 
@@ -38,6 +39,7 @@ static var is_jumping: bool = false
 static var is_dashing: bool = false
 static var is_attacking: bool = false
 static var is_interacting: bool = false
+static var is_switching_domain: bool = false
 
 # ---------- GODOT CALLBACKS ----------
 func _enter_tree() -> void:
@@ -117,6 +119,9 @@ func _update_gameplay_inputs() -> void:
 		
 	is_interacting = Input.is_action_just_pressed(INTERACT)
 	if is_interacting: buffer_action(INTERACT)
+
+	is_switching_domain = Input.is_action_just_pressed(SWITCH_DOMAIN)
+	if is_interacting: buffer_action(SWITCH_DOMAIN)
 		
 	return
 
