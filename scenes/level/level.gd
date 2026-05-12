@@ -42,27 +42,56 @@ func _update_camera_focus(_delta):
 @onready var camera: CameraManager = CameraManager.instance
 @export var irl_domain: Domain = null
 @export var vr_domain: Domain = null
+var player: Player
 var active_domain: Domain
 var _using_vr_domain: bool = false
+signal domain_switched(target_is_vr: bool)
+
 
 
 ## Sets the active domain to the fantasy domain.
 func set_domain_view(use_vr_domain: bool) -> void:
+
+	# VR view
 	if use_vr_domain:
+		# TODO: Hide/show all objects except Player
 		vr_domain.set_enabled(true)
 		irl_domain.set_enabled(false)
 		active_domain = vr_domain
+
+		# TODO: Switch the player animated sprite to VR
+
+		# TODO: Fade-out all IRL audio
+
 		pass
 
+	# IRL view
 	else:
+		# TODO: Hide/show all objects except Player
 		vr_domain.set_enabled(false)
 		irl_domain.set_enabled(true)
 		active_domain = irl_domain
+
+		# TODO: Switch the player animated sprite to IRL
+
+		# TODO: Fade-out all VR audio
+
 		pass
 
 	_using_vr_domain = use_vr_domain
+	domain_switched.emit(use_vr_domain)
 	return
 
+
+## Scans if the player has triggered a domain switch.
+func _check_domain_switch_trigger(_delta) -> void:
+	var should_switch: bool = InputManager.consume_action(InputManager.SWITCH_DOMAIN)
+	if should_switch:
+		var target_domain: bool = not _using_vr_domain
+		domain_switched.emit(target_domain)
+		set_domain_view(target_domain)
+		pass
+	return
 
 
 # ---------- DEBUGGING ----------
@@ -77,20 +106,21 @@ func _ready() -> void:
 	Log.me("Readying level %s. Scanning children and properties..." % name)
 
 	if player_spawn_collection == null:
-		Log.err("player_spawn_collection is missing from children; cannot spawn player.", true, false)
-		return
+		Log.warn("player_spawn_collection is missing from children; cannot spawn player.")
+		pass
 
 	if npc_spawn_collection == null:
-		Log.err("npc_spawn_collection is not missing from children; cannot spawn NPCs.", true, false)
-		return
+		Log.warn("npc_spawn_collection is missing from children; cannot spawn NPCs.")
+		pass
 	
 	if enemy_spawn_collection == null:
-		Log.err("enemy_spawn_collection is not missing from children; cannot spawn enemies.", true, false)
-		return
+		Log.warn("enemy_spawn_collection is missing from children; cannot spawn enemies.")
+		pass
 	
 	if camera_focus_collection == null:
-		Log.warn("camera_focus_collection is missing from children; camera may behave unnaturally.", true, false)
+		Log.warn("camera_focus_collection is missing from children; camera may behave unnaturally.")
 		pass
+	
 	else:
 		if camera_focus_collection.get_child_count() > 0:
 			var camera_focus_points: Array[Node2D] = []
@@ -105,13 +135,19 @@ func _ready() -> void:
 		else: camera.set_target_topleft(camera_focus_collection.global_position, true)
 		pass	
 
+	# IRL DOMAIN
 	if irl_domain == null:
-		Log.err("irl_domain is not set; cannot switch to IRL view.", true, false)
-		return
+		Log.warn("irl_domain is not set; cannot switch to IRL view.")
+		pass
+	
+	else: irl_domain.level = self
 
+	# VR DOMAIN
 	if vr_domain == null:
-		Log.err("vr_domain is not set; cannot switch to fantasy view.", true, false)
+		Log.err("vr_domain is not set; cannot switch to fantasy view.")
 		return
+	
+	else: vr_domain.level = self
 
 	Log.me("Done!", log_ready, false)
 	return
@@ -119,4 +155,5 @@ func _ready() -> void:
 
 func _process(delta) -> void:
 	_update_camera_focus(delta)
+	_check_domain_switch_trigger(delta)
 	return

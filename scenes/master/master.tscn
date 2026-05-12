@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://ccl0px43jq2fx" path="res://scenes/master/scene_loader.gd" id="6_5seyr"]
 [ext_resource type="Script" uid="uid://csy1ot0r3dxsr" path="res://scenes/master/ui_manager.gd" id="7_08ffl"]
 [ext_resource type="PackedScene" uid="uid://cx22l4o46fvh4" path="res://levels/test_level_1/test_domain_irl.tscn" id="7_11v8m"]
-[ext_resource type="PackedScene" uid="uid://bbspeyo6f380t" path="res://levels/test_level_1/test_level_1.tscn" id="8_6ch72"]
+[ext_resource type="PackedScene" uid="uid://dxhalomr2qmah" path="res://levels/level_1/level_1.tscn" id="8_6ch72"]
 
 [node name="Master" type="Node" unique_id=1279454520]
 script = ExtResource("1_kwmx6")
@@ -39,6 +39,7 @@ script = ExtResource("6_5seyr")
 theatre = NodePath("../Theatre")
 dev_scene = ExtResource("8_6ch72")
 levels = Array[PackedScene]([ExtResource("7_11v8m")])
+log_ready = true
 metadata/_custom_type_script = "uid://ccl0px43jq2fx"
 
 [node name="Theatre" type="Node" parent="." unique_id=1381566111]
