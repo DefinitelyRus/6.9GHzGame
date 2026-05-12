@@ -95,7 +95,7 @@ static func load_scene(level_scene: PackedScene) -> void:
 	instance.theatre.add_child(level)
 	instance.loaded_scene = level
 
-	Master.instance.background.visible = false
+	#Master.instance.background.visible = false
 	return
 
 
