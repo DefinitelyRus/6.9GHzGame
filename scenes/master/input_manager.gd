@@ -121,7 +121,7 @@ func _update_gameplay_inputs() -> void:
 	if is_interacting: buffer_action(INTERACT)
 
 	is_switching_domain = Input.is_action_just_pressed(SWITCH_DOMAIN)
-	if is_interacting: buffer_action(SWITCH_DOMAIN)
+	if is_switching_domain: buffer_action(SWITCH_DOMAIN)
 		
 	return
 
