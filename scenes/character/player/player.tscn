@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://b1ftc0s6ov1sw" path="res://scenes/character/player/player.gd" id="2_apd2u"]
 [ext_resource type="Script" uid="uid://lxdtntmtxcpn" path="res://scenes/character/player/slingshot_combat.gd" id="3_sfcyi"]
 [ext_resource type="Script" uid="uid://c2x8wa02kff8w" path="res://scenes/character/player/player_animation.gd" id="4_ucfoo"]
+[ext_resource type="PackedScene" uid="uid://dx3i14rxxucba" path="res://scenes/projectile/slingshot_projetile/slingshot_projectile.tscn" id="5_puv7k"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sfcyi"]
 radius = 4.0
@@ -67,9 +68,10 @@ position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_puv7k")
 animation = &"ari_idle"
 
-[node name="CharacterCombat" parent="." index="3" unique_id=1335177334]
+[node name="CharacterCombat" parent="." index="3" unique_id=1335177334 node_paths=PackedStringArray("sprite")]
 script = ExtResource("3_sfcyi")
-projectile_scene = null
+sprite = NodePath("../IRLAnimatedSprite")
+projectile_scene = ExtResource("5_puv7k")
 short_throw_damage = 20.0
 long_throw_damage = 45.0
 short_throw_threshold = 0.5
