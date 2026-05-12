@@ -2,10 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cfb6t7q2nu1w0" path="res://scenes/domain/domain.gd" id="1_l08qp"]
 
-[node name="Domain" type="Node2D" unique_id=1073536569 node_paths=PackedStringArray("tilemap", "world_objects")]
+[node name="Domain" type="Node2D" unique_id=1073536569]
 script = ExtResource("1_l08qp")
-tilemap = NodePath("")
-world_objects = NodePath("WorldObjects")
 
 [node name="TileMaps" type="Node2D" parent="." unique_id=1044524471]
 
