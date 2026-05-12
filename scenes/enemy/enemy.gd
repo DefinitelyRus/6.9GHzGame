@@ -10,6 +10,7 @@ var current_health: float
 var target: Node2D = null
 var is_stunned: bool = false
 var is_knocked_out: bool = false
+var _player_in_attack_area: Node2D = null
 var knockback_velocity: Vector2 = Vector2.ZERO
 var facing_direction: int = 1
 
@@ -61,6 +62,9 @@ func _setup_detection() -> void:
 		detection_area.body_exited.connect(_on_detection_area_exited)
 	if attack_area:
 		attack_area.body_entered.connect(_on_attack_area_entered)
+		attack_area.body_entered.connect(_on_attack_area_entered_body)
+		attack_area.body_exited.connect(_on_attack_area_body_exited)
+        
 	if weakpoint_area:
 		weakpoint_area.body_entered.connect(_on_weakpoint_area_entered)
 
@@ -92,12 +96,40 @@ func _on_attack_area_entered(body: Node2D) -> void:
 	# Using groups is more robust and standard than checking node names.
 	if body.is_in_group("Player") and body.has_method("take_damage"):
 		attack_player(body)
+		
+func _on_attack_area_entered_body(body: Node2D):
+	_try_attack_player(body)
+
+func _on_attack_area_body_exited(body: Node2D) -> void:
+	if body == _player_in_attack_area:
+		_player_in_attack_area = null
+		
+func _try_attack_player(body: Node2D):
+	if not _can_attack:
+		return
+	if current_state == State.DEAD or current_state == State.KNOCKED_OUT:
+		return
+
+	var is_player = (
+		body.is_in_group("player") or body.is_in_group("Player") or
+		body.name == "Player" or body.name.to_lower() == "player"
+	)
+
+	if is_player:
+		_player_in_attack_area = body
+		_can_attack = false
+		_attack_cooldown_timer = attack_cooldown
+		attack_player(body)
 
 func _on_weakpoint_area_entered(body: Node2D) -> void:
 	# Ensure the body has a 'damage' property before accessing it to prevent errors.
 	if body.is_in_group("PlayerProjectile") and "damage" in body:
 		take_damage(body.damage, true)
 		emit_signal("weakpoint_hit")
+		
+func _on_attack_area_entered_area(area: Area2D):
+	var body = area.get_parent()
+	_try_attack_player(body)
 
 # ---------- COMBAT ----------
 func take_damage(amount: float, is_weakpoint: bool = false) -> void:
