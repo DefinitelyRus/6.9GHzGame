@@ -18,7 +18,7 @@ enum AudioChannels {
 # ---------- COMPONENTS ----------
 
 ## The singleton instance of the AudioManager.
-static var instance: AudioManager
+static var instance: AudioManager = null
 
 ## Reference to the Master node.
 @onready var m: Master = get_node("/root/Master")
@@ -67,7 +67,14 @@ var _is_fading_out: bool = false
 
 func _enter_tree() -> void:
 	Log.me("AudioManager entered the tree. Checking properties...", log_ready, true)
+
+	if instance != null:
+		Log.err("Existing instance of AudioManager detected.")
+		queue_free()
+		return
+	
 	instance = self
+	
 	Log.me("Done!", true)
 	return
 

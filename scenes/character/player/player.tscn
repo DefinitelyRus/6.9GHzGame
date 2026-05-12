@@ -60,3 +60,5 @@ shape = SubResource("CapsuleShape2D_h6tdw")
 sprite_frames = SubResource("SpriteFrames_hixpj")
 animation = &"Ari_Idle"
 frame_progress = 0.8913648
+
+[node name="CoyoteTimer" type="Timer" parent="." unique_id=447388931]

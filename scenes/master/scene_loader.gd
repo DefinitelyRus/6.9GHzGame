@@ -7,7 +7,7 @@ extends Node
 @export var dev_scene: PackedScene
 @export var levels: Array[PackedScene] = []
 
-static var instance: SceneLoader = self
+static var instance: SceneLoader = null
 static var level_index: int = 0
 static var loaded_scene: Node = null
 
@@ -21,7 +21,7 @@ func _enter_tree() -> void:
 	Log.me("A SceneLoader has entered the tree. Checking properties...", log_ready)
 
 	if instance != null:
-		Log.err("Multiple instances of SceneLoader detected. There should only be one SceneLoader in the scene.")
+		Log.err("Existing instance of SceneLoader detected.")
 		queue_free()
 		return
 	

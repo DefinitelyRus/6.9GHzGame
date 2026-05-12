@@ -5,7 +5,7 @@ class_name InputManager
 extends Node
 
 # ---------- COMPONENTS ----------
-static var instance: InputManager
+static var instance: InputManager = null
 
 # ---------- DEBUGGING ----------
 @export_group("Debugging")
@@ -42,7 +42,7 @@ static var is_interacting: bool = false
 # ---------- GODOT CALLBACKS ----------
 func _enter_tree() -> void:
 	if instance != null:
-		Log.err("Multiple instances of InputManager detected.")
+		Log.err("Existing instance of InputManager detected.")
 		queue_free()
 		return
 
@@ -98,13 +98,13 @@ func _update_gameplay_inputs() -> void:
 	
 	var left: float = Input.get_action_strength(MOVE_LEFT)
 	var right: float = Input.get_action_strength(MOVE_RIGHT)
-	var up: float = Input.get_action_strength(MOVE_UP)
-	var down: float = Input.get_action_strength(MOVE_DOWN)
+	#var up: float = Input.get_action_strength(MOVE_UP)
+	#var down: float = Input.get_action_strength(MOVE_DOWN)
 	
 	var x_axis: float = right - left
-	var y_axis: float = down - up
+	#var y_axis: float = down - up
 	
-	move_vector = Vector2(x_axis, y_axis)
+	move_vector = Vector2(x_axis, 0)
 	
 	is_jumping = Input.is_action_just_pressed(JUMP)
 	if is_jumping: buffer_action(JUMP)
