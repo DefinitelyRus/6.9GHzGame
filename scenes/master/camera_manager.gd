@@ -5,13 +5,13 @@ static var instance: CameraManager = null
 
 # ---------- CAMERA PANNING ----------
 @export_group("Camera Panning")
-@export var pan_duration: float = 2
+@export var pan_duration: float = 1
 var _target_position: Vector2
 
 
 ## Moves the camera to the target position, using the center of the screen as the comparison point.
 func set_target_centered(center: Vector2, instant: bool = false) -> void:
-	Log.me("Setting target position to X=%d Y=%d to the center of the screen..." % [center.x, center.y])
+	Log.me("Setting target position to X=%d Y=%d to the center of the screen..." % [center.x, center.y], log_process)
 
 	if not instant: _target_position = center
 	else:
@@ -74,11 +74,18 @@ func _handle_shake(delta: float) -> void:
 	return
 
 
+# ---------- DEBUGGING ----------
+@export_group("Debugging")
+@export var log_ready: bool = false
+@export var log_process: bool = false
+
+
 # ---------- GODOT CALLBACKS ----------
 func _enter_tree() -> void:
-	Log.me("A CameraManager has entered the tree. Scanning...")
+	Log.me("A CameraManager has entered the tree. Scanning...", log_ready)
+
 	if instance != null:
-		Log.err("Existing instance of CameraManager detected.")
+		Log.err("Existing instance of CameraManager detected.", log_ready)
 		queue_free()
 		return
 
