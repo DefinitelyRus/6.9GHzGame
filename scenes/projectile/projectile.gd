@@ -129,4 +129,3 @@ func _despawn_quiet() -> void:
 	# Despawn quietly after timeout
 	emit_signal("despawned")
 	queue_free()
-
