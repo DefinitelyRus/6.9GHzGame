@@ -9,9 +9,12 @@ extends Node2D
 ## The different audio channels available for playback.
 enum AudioChannels {
 	MASTER,
-	MUSIC,
-	SFX,
-	AMBIENT
+	MUSIC_IRL,
+	MUSIC_VR,
+	SFX_IRL,
+	SFX_VR,
+	AMBIENT_IRL,
+	AMBIENT_VR
 }
 
 
@@ -50,6 +53,9 @@ static var instance: AudioManager = null
 ## The speed at which audio fades out.
 @export var fade_out_speed: float = 1.0
 
+## The duration of domain audio cross-fade in seconds.
+@export var domain_fade_duration: float = 1.0
+
 ## A dictionary storing audio streams by name.
 @export var sfx_library: Dictionary = {}
 
@@ -61,6 +67,18 @@ static var streams_to_remove: Array[AudioStreamPlayer] = []
 
 ## Whether the audio manager is currently fading out all audio.
 var _is_fading_out: bool = false
+
+## Current active domain (true = VR, false = IRL)
+var _current_domain_is_vr: bool = false
+
+## Whether domain audio fade is currently active.
+var _is_fading_domain: bool = false
+
+## Timer for domain fade progress (0.0 to 1.0).
+var _domain_fade_timer: float = 0.0
+
+## A map to track which channel each audio player belongs to.
+var _player_channel_map: Dictionary = {}
 
 
 # ---------- GODOT CALLBACKS ----------
@@ -83,13 +101,14 @@ func _process(delta: float) -> void:
 	if Master.is_paused:
 		return
 	update_fade_out(delta)
+	update_domain_fade(delta)
 	return
 
 
 # ---------- AUDIO PLAYBACK ----------
 
 ## Plays an audio stream from the library by name.
-static func stream_audio(sfx_name: String, channel: int = AudioChannels.SFX, volume: float = 1.0) -> AudioStreamPlayer:
+static func stream_audio(sfx_name: String, channel: int = AudioChannels.SFX_IRL, volume: float = 1.0) -> AudioStreamPlayer:
 	if not instance.sfx_library.has(sfx_name):
 		Log.warn("SFX '" + sfx_name + "' not found in SFX Library!", true, true)
 		return null
@@ -104,7 +123,7 @@ static func stream_audio(sfx_name: String, channel: int = AudioChannels.SFX, vol
 
 
 ## Plays a specific AudioStream object.
-static func stream_audio_by_stream(stream: AudioStream, unique_name: String = "", channel: int = AudioChannels.SFX, volume: float = 1.0) -> AudioStreamPlayer:
+static func stream_audio_by_stream(stream: AudioStream, unique_name: String = "", channel: int = AudioChannels.SFX_IRL, volume: float = 1.0) -> AudioStreamPlayer:
 	if unique_name == "":
 		var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 		var rand_suffix: int = rng.randi_range(0, 999999)
@@ -113,15 +132,15 @@ static func stream_audio_by_stream(stream: AudioStream, unique_name: String = ""
 		
 	var final_vol: float = volume * instance.universal_volume
 	
-	if channel == AudioChannels.MUSIC:
+	if channel == AudioChannels.MUSIC_IRL or channel == AudioChannels.MUSIC_VR:
 		final_vol *= instance.music_volume
 		pass
 
-	elif channel == AudioChannels.SFX:
+	elif channel == AudioChannels.SFX_IRL or channel == AudioChannels.SFX_VR:
 		final_vol *= instance.sfx_volume
 		pass
 
-	elif channel == AudioChannels.AMBIENT:
+	elif channel == AudioChannels.AMBIENT_IRL or channel == AudioChannels.AMBIENT_VR:
 		final_vol *= instance.ambient_volume
 		pass
 		
@@ -136,8 +155,12 @@ static func stream_audio_by_stream(stream: AudioStream, unique_name: String = ""
 	instance.audio_streams.append(audio_player)
 	instance.add_child(audio_player)
 	
+	# Track the channel for this player
+	instance._player_channel_map[audio_player] = channel
+	
 	var cb: Callable = func() -> void:
 		instance.audio_streams.erase(audio_player)
+		instance._player_channel_map.erase(audio_player)
 		audio_player.queue_free()
 		return
 		
@@ -161,15 +184,15 @@ static func stream_audio_2d(sfx_name: String, pos: Vector2, channel: int, volume
 static func stream_audio_2d_by_stream(stream: AudioStream, pos: Vector2, channel: int, volume: float = 1.0) -> AudioStreamPlayer2D:
 	var final_vol: float = volume * instance.universal_volume
 	
-	if channel == AudioChannels.MUSIC:
+	if channel == AudioChannels.MUSIC_IRL or channel == AudioChannels.MUSIC_VR:
 		final_vol *= instance.music_volume
 		pass
 		
-	elif channel == AudioChannels.SFX:
+	elif channel == AudioChannels.SFX_IRL or channel == AudioChannels.SFX_VR:
 		final_vol *= instance.sfx_volume
 		pass
 		
-	elif channel == AudioChannels.AMBIENT:
+	elif channel == AudioChannels.AMBIENT_IRL or channel == AudioChannels.AMBIENT_VR:
 		final_vol *= instance.ambient_volume
 		pass
 		
@@ -225,6 +248,15 @@ static func fade_out_audio() -> void:
 	return
 
 
+## Switches between IRL and VR audio domains with a cross-fade.
+## Active domain audio fades in, inactive domain audio fades out over 1 second.
+static func use_vr_audio(use_vr_domain: bool) -> void:
+	instance._current_domain_is_vr = use_vr_domain
+	instance._is_fading_domain = true
+	instance._domain_fade_timer = 0.0
+	return
+
+
 ## Processes the fade-out logic for all active audio streams.
 static func update_fade_out(delta: float) -> void:
 	if not instance._is_fading_out:
@@ -253,4 +285,39 @@ static func update_fade_out(delta: float) -> void:
 	
 	var still_playing: bool = instance.audio_streams.size() > 0
 	instance._is_fading_out = still_playing
+	return
+
+
+## Processes the domain audio cross-fade.
+static func update_domain_fade(delta: float) -> void:
+	if not instance._is_fading_domain:
+		return
+	
+	instance._domain_fade_timer += delta
+	var progress: float = clampf(instance._domain_fade_timer / instance.domain_fade_duration, 0.0, 1.0)
+	
+	for player: AudioStreamPlayer in instance.audio_streams:
+		if not player in instance._player_channel_map:
+			continue
+		
+		var player_channel: int = instance._player_channel_map[player]
+		var is_target_domain: bool = false
+		
+		# Determine if this player belongs to the target domain
+		if instance._current_domain_is_vr:
+			is_target_domain = player_channel in [AudioChannels.MUSIC_VR, AudioChannels.SFX_VR, AudioChannels.AMBIENT_VR]
+		else:
+			is_target_domain = player_channel in [AudioChannels.MUSIC_IRL, AudioChannels.SFX_IRL, AudioChannels.AMBIENT_IRL]
+		
+		# Calculate target volume (full for target domain, silent for other)
+		var target_vol_linear: float = 1.0 if is_target_domain else 0.0
+		var current_vol_linear: float = db_to_linear(player.volume_db)
+		var next_vol_linear: float = lerpf(current_vol_linear, target_vol_linear, progress)
+		
+		player.volume_db = linear_to_db(next_vol_linear)
+	
+	# Fade complete
+	if progress >= 1.0:
+		instance._is_fading_domain = false
+	
 	return

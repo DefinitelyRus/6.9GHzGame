@@ -18,8 +18,8 @@ var facing_direction: int = 1
 var move_direction: float = 0.0
 var jump_intent: bool = false
 
-@onready var coyote_timer: Timer = $CoyoteTimer
-@onready var combat_handler: Node = get_node_or_null("CharacterCombat")
+@export var coyote_timer: Timer
+@export var combat_handler: Node
 var camera: CameraManager = CameraManager.instance
 
 # ---------- GODOT CALLBACKS ----------
@@ -94,6 +94,8 @@ func _handle_jump() -> void:
 	if jump_intent and can_coyote_jump:
 		velocity.y = jump_velocity
 		
+		AudioManager.stream_audio("player_jump", AudioManager.AudioChannels.SFX_IRL)
+		
 		if camera != null: camera.shake(5.0)
 			
 		if coyote_timer != null: coyote_timer.stop()
@@ -111,6 +113,7 @@ func _update_floor_state() -> void:
 	if is_on_floor():
 		was_on_floor = true
 		is_jumping = false
+		#AudioManager.stream_audio("player_land", AudioManager.AudioChannels.SFX) # FIX: Plays constantly
 		pass
 
 	else:
