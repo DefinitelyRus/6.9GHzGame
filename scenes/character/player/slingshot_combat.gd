@@ -170,16 +170,7 @@ func _fire(is_long_throw: bool) -> void:
 	shot_fired.emit(damage, is_long_throw)
 
 	if sprite != null:
-		var anim: String = "slingshot_fire_short"
-		if is_long_throw:
-			anim = "slingshot_fire_long"
-			pass
-			
-		if sprite.sprite_frames.has_animation(anim):
-			sprite.play(anim)
-			await sprite.animation_finished
-			pass
-		elif sprite.sprite_frames.has_animation("slingshot_fire"):
+		if sprite.sprite_frames.has_animation("slingshot_fire"):
 			sprite.play("slingshot_fire")
 			await sprite.animation_finished
 			pass

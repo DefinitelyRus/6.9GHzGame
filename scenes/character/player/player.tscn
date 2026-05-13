@@ -46,6 +46,28 @@ animations = [{
 "name": &"ari_idle",
 "speed": 5.0
 }, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ywt2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sfcyi")
+}],
+"loop": true,
+"name": &"slingshot_charge",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ucfoo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apd2u")
+}],
+"loop": false,
+"name": &"slingshot_fire",
+"speed": 5.0
+}, {
 "frames": [],
 "loop": true,
 "name": &"default",
