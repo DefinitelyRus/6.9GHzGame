@@ -1,10 +1,52 @@
 [gd_scene format=3 uid="uid://bdqh0nl7c4cxc"]
 
 [ext_resource type="Script" uid="uid://b1ftc0s6ov1sw" path="res://scenes/character/player/player.gd" id="1_888j0"]
+[ext_resource type="Texture2D" uid="uid://dlwd4yhcgh0r4" path="res://scenes/character/player/ari_idle.png" id="2_l5gm6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h6tdw"]
 radius = 7.0
 height = 24.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sfcyi"]
+atlas = ExtResource("2_l5gm6")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ucfoo"]
+atlas = ExtResource("2_l5gm6")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apd2u"]
+atlas = ExtResource("2_l5gm6")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_puv7k"]
+atlas = ExtResource("2_l5gm6")
+region = Rect2(48, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hixpj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sfcyi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ucfoo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apd2u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_puv7k")
+}],
+"loop": true,
+"name": &"Ari_Idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Player" type="CharacterBody2D" unique_id=574515454]
 script = ExtResource("1_888j0")
@@ -15,6 +57,8 @@ position = Vector2(0, 3)
 shape = SubResource("CapsuleShape2D_h6tdw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=7720066]
-animation = &""
+sprite_frames = SubResource("SpriteFrames_hixpj")
+animation = &"Ari_Idle"
+frame_progress = 0.8913648
 
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=447388931]
