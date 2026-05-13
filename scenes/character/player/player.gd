@@ -1,6 +1,8 @@
 class_name Player
 extends Character
 
+@export var aim_speed_multiplier: float = 0.2
+
 func _enter_tree() -> void:
 	Log.me("Player %s has entered the tree.")
 	super._enter_tree()
