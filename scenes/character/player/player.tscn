@@ -74,10 +74,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" unique_id=244452151 node_paths=PackedStringArray("coyote_timer", "combat_handler") instance=ExtResource("1_h6tdw")]
+[node name="Player" unique_id=244452151 node_paths=PackedStringArray("coyote_timer", "combat_handler", "animation_handler") instance=ExtResource("1_h6tdw")]
 script = ExtResource("2_apd2u")
+aim_speed_multiplier = 0.2
 coyote_timer = NodePath("CoyoteTimer")
 combat_handler = NodePath("CharacterCombat")
+animation_handler = NodePath("PlayerAnimation")
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1115019516]
 shape = SubResource("CapsuleShape2D_sfcyi")
