@@ -20,6 +20,7 @@ var jump_intent: bool = false
 
 @export var coyote_timer: Timer
 @export var combat_handler: Node
+@export var animation_handler: Node
 var camera: CameraManager = CameraManager.instance
 
 # ---------- GODOT CALLBACKS ----------

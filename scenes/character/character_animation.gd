@@ -40,6 +40,13 @@ func _update_animation_state() -> void:
 	return
 
 
+## Plays the VR activation animation.
+func play_vr_on_animation() -> void:
+	if character == null or irl_animated_sprite == null: return
+	irl_animated_sprite.play("vr_on")
+	return
+
+
 # ---------- DEBUGGING ----------
 @export_group("Debugging")
 @export var log_ready: bool = false

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c8uhklnkmv0xj" path="res://scenes/master/master.gd" id="1_kwmx6"]
 [ext_resource type="Script" uid="uid://c4rkccp6ak2x5" path="res://scenes/master/audio_manager.gd" id="2_2uhh1"]
+[ext_resource type="AudioStream" uid="uid://geiuy1q6x0yl" path="res://scenes/level/somnambulation.wav" id="3_5seyr"]
 [ext_resource type="Script" uid="uid://cqqls3xnoi53e" path="res://scenes/master/data_manager.gd" id="3_11v8m"]
 [ext_resource type="Script" uid="uid://dd51ctrt8wuhi" path="res://scenes/master/camera_manager.gd" id="3_bftpt"]
 [ext_resource type="Script" uid="uid://bmp6v85rtgjts" path="res://scenes/master/input_manager.gd" id="4_bftpt"]
@@ -16,6 +17,9 @@ script = ExtResource("1_kwmx6")
 
 [node name="AudioManager" type="Node2D" parent="." unique_id=31993522]
 script = ExtResource("2_2uhh1")
+sfx_library = {
+"music": ExtResource("3_5seyr")
+}
 metadata/_custom_type_script = "uid://c4rkccp6ak2x5"
 
 [node name="CameraManager" type="Camera2D" parent="." unique_id=286161255]

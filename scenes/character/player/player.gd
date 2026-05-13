@@ -1,6 +1,8 @@
 class_name Player
 extends Character
 
+@export var aim_speed_multiplier: float = 0.2
+
 func _enter_tree() -> void:
 	Log.me("Player %s has entered the tree.")
 	super._enter_tree()
@@ -24,4 +26,15 @@ func _physics_process(delta: float) -> void:
 func _poll_inputs() -> void:
 	move_direction = InputManager.move_vector.x
 	jump_intent = InputManager.consume_action(InputManager.JUMP)
+	return
+
+
+func die() -> void:
+	UIManager.set_black_overlay_opaque()
+	
+	if current_level != null:
+		current_level.teleport_player_to_checkpoint()
+		pass
+		
+	UIManager.fade_out_black()
 	return

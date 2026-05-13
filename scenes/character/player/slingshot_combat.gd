@@ -56,6 +56,16 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	_handle_slingshot_input(delta)
 	_update_indicator()
+	
+	var player: Player = owner as Player
+	if player != null:
+		var is_attacking: bool = Input.is_action_pressed(InputManager.ATTACK)
+		if is_attacking:
+			var max_speed: float = player.speed * player.aim_speed_multiplier
+			player.velocity.x = clampf(player.velocity.x, -max_speed, max_speed)
+			pass
+		pass
+		
 	return
 
 # ---------- INPUT HANDLING ----------
