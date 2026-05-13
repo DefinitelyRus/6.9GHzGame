@@ -133,6 +133,7 @@ func patrol_between_points() -> void:
 	velocity.x = direction_to_point * patrol_speed
 	facing_direction = direction_to_point
 	patrol_direction = direction_to_point
+	AudioManager.stream_audio("enemy_footstep", AudioManager.AudioChannels.SFX_IRL)
 	return
 
 # ---------- CHASE BEHAVIOR ----------
@@ -159,6 +160,7 @@ func chase_behavior(_delta: float) -> void:
 	if can_move:
 		velocity.x = direction_to_target * chase_speed
 		facing_direction = direction_to_target
+		AudioManager.stream_audio("enemy_chase", AudioManager.AudioChannels.SFX_IRL)
 	else:
 		velocity.x = 0
 	return
@@ -181,6 +183,7 @@ func attack_behavior(_delta: float) -> void:
 func turn_around() -> void:
 	patrol_direction *= -1
 	facing_direction = patrol_direction
+	AudioManager.stream_audio("enemy_turn", AudioManager.AudioChannels.SFX_IRL)
 	start_waiting()
 	return
 

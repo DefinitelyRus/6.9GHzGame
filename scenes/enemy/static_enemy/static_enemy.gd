@@ -77,6 +77,8 @@ func _perform_attack() -> void:
 	_can_attack = false
 	current_state = State.ATTACK
 	anim.play("Attack")
+	
+	AudioManager.stream_audio("static_enemy_attack", AudioManager.AudioChannels.SFX_IRL)
 
 	await get_tree().create_timer(0.2).timeout
 
@@ -149,6 +151,8 @@ func take_damage_from_area(amount: float, area: Area2D) -> void:
 func _play_hurt() -> void:
 	if current_state == State.DEAD or current_state == State.ATTACK:
 		return
+	
+	AudioManager.stream_audio("static_enemy_hurt", AudioManager.AudioChannels.SFX_IRL)
 	# Only play Hurt animation if it actually exists — otherwise just flash.
 	
 	if anim.sprite_frames.has_animation("Hurt"):
@@ -175,6 +179,7 @@ func _trigger_death() -> void:
 
 	current_state = State.DEAD
 	emit_signal("died")
+	AudioManager.stream_audio("static_enemy_death", AudioManager.AudioChannels.SFX_IRL)
 	_attacking = false
 	_player_in_melee_range = null
 	velocity = Vector2.ZERO
