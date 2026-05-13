@@ -117,6 +117,15 @@ func _check_domain_switch_trigger(_delta) -> void:
 	return
 
 
+# ---------- CHECKPOINTS ----------
+func teleport_player_to_checkpoint() -> void:
+	if player != null:
+		player.global_position = respawn_point
+		pass
+	return
+
+
+
 # ---------- DEBUGGING ----------
 @export_group("Debugging")
 @export var log_ready: bool = true
