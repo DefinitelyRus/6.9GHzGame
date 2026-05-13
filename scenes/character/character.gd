@@ -18,8 +18,8 @@ var facing_direction: int = 1
 var move_direction: float = 0.0
 var jump_intent: bool = false
 
-@onready var coyote_timer: Timer = $CoyoteTimer
-@onready var combat_handler: Node = get_node_or_null("CharacterCombat")
+@export var coyote_timer: Timer
+@export var combat_handler: Node
 var camera: CameraManager = CameraManager.instance
 
 # ---------- GODOT CALLBACKS ----------
