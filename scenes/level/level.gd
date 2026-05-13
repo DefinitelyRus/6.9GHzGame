@@ -45,6 +45,7 @@ func _update_camera_focus(_delta):
 var player: Player
 var active_domain: Domain
 var _using_vr_domain: bool = false
+var respawn_point: Vector2 = Vector2.ZERO
 signal domain_switched(target_is_vr: bool)
 
 
@@ -61,7 +62,7 @@ func set_domain_view(use_vr_domain: bool) -> void:
 
 		# TODO: Switch the player animated sprite to VR
 
-		# TODO: Fade-out all IRL audio
+		AudioManager.use_vr_audio(true)
 
 		pass
 
@@ -74,7 +75,7 @@ func set_domain_view(use_vr_domain: bool) -> void:
 
 		# TODO: Switch the player animated sprite to IRL
 
-		# TODO: Fade-out all VR audio
+		AudioManager.use_vr_audio(false)
 
 		pass
 
