@@ -64,7 +64,7 @@ func _setup_detection() -> void:
 		attack_area.body_entered.connect(_on_attack_area_entered)
 		attack_area.body_entered.connect(_on_attack_area_entered_body)
 		attack_area.body_exited.connect(_on_attack_area_body_exited)
-        
+		
 	if weakpoint_area:
 		weakpoint_area.body_entered.connect(_on_weakpoint_area_entered)
 

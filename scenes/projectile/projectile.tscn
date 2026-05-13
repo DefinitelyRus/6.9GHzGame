@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://i0vov00mne0w"]
+
+[ext_resource type="Script" uid="uid://6g13pb3ls2yf" path="res://scenes/projectile/projectile.gd" id="1_t8015"]
+[ext_resource type="Texture2D" uid="uid://dlwd4yhcgh0r4" path="res://scenes/character/player/ari_idle.png" id="2_2dulq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2dulq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lw0th"]
+
+[node name="Projectile" type="RigidBody2D" unique_id=131780777]
+collision_layer = 8
+collision_mask = 7
+script = ExtResource("1_t8015")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1992714538]
+shape = SubResource("CircleShape2D_2dulq")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=957930658]
+texture = ExtResource("2_2dulq")
+region_enabled = true
+region_rect = Rect2(9, 10, 2, 2)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=43788569]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=654723880]
+shape = SubResource("CircleShape2D_lw0th")
