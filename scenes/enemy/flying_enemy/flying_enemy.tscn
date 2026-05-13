@@ -35,6 +35,26 @@ region = Rect2(240, 96, 48, 48)
 atlas = ExtResource("3_1wleg")
 region = Rect2(288, 96, 48, 48)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wleg"]
+atlas = ExtResource("3_1wleg")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xaq42"]
+atlas = ExtResource("3_1wleg")
+region = Rect2(240, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nrt83"]
+atlas = ExtResource("3_1wleg")
+region = Rect2(192, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8g35k"]
+atlas = ExtResource("3_1wleg")
+region = Rect2(144, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_er3si"]
+atlas = ExtResource("3_1wleg")
+region = Rect2(96, 48, 48, 48)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_7kjm4"]
 atlas = ExtResource("3_1wleg")
 region = Rect2(0, 0, 48, 48)
@@ -63,26 +83,6 @@ region = Rect2(240, 0, 48, 48)
 atlas = ExtResource("3_1wleg")
 region = Rect2(288, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1wleg"]
-atlas = ExtResource("3_1wleg")
-region = Rect2(0, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xaq42"]
-atlas = ExtResource("3_1wleg")
-region = Rect2(240, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nrt83"]
-atlas = ExtResource("3_1wleg")
-region = Rect2(192, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8g35k"]
-atlas = ExtResource("3_1wleg")
-region = Rect2(144, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_er3si"]
-atlas = ExtResource("3_1wleg")
-region = Rect2(96, 48, 48, 48)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_g4l43"]
 animations = [{
 "frames": [{
@@ -108,7 +108,27 @@ animations = [{
 "texture": SubResource("AtlasTexture_kmgy5")
 }],
 "loop": true,
-"name": &"Death",
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1wleg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xaq42")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nrt83")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8g35k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_er3si")
+}],
+"loop": false,
+"name": &"hit",
 "speed": 5.0
 }, {
 "frames": [{
@@ -134,27 +154,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_p6cnj")
 }],
 "loop": true,
-"name": &"Fly",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1wleg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xaq42")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nrt83")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8g35k")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_er3si")
-}],
-"loop": false,
-"name": &"Swoop",
+"name": &"idle",
 "speed": 5.0
 }]
 
@@ -165,19 +165,16 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_8g35k"]
 
 [node name="FlyingEnemy" unique_id=1143264470 node_paths=PackedStringArray("sprite", "detection_area", "attack_area", "weakpoint_area") instance=ExtResource("1_nhq4t")]
-collision_layer = 2
-collision_mask = 5
 script = ExtResource("2_t2v10")
 fly_speed = 80.0
 return_speed = 60.0
-swoop_speed = 90.0
+swoop_speed = 250.0
 hover_height = 80.0
 hover_amplitude = 10.0
 hover_frequency = 1.5
 swoop_cooldown = 2.0
 swoop_distance = 200.0
 hover_side_offset = 60.0
-lose_aggro_range = 300.0
 sprite = NodePath("AnimatedSprite2D")
 detection_area = NodePath("DetectionArea")
 attack_area = NodePath("AttackArea")
@@ -188,29 +185,23 @@ shape = SubResource("CircleShape2D_1wleg")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=176656269]
 sprite_frames = SubResource("SpriteFrames_g4l43")
-animation = &"Fly"
-autoplay = "Fly"
+animation = &"idle"
+frame_progress = 0.94259346
 offset = Vector2(1.835, 0)
 
 [node name="DetectionArea" type="Area2D" parent="." index="2" unique_id=546302454]
-collision_layer = 16
-collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" index="0" unique_id=19788435]
 scale = Vector2(12, 12)
 shape = SubResource("CircleShape2D_xaq42")
 
 [node name="AttackArea" type="Area2D" parent="." index="3" unique_id=760904133]
-collision_layer = 8
-collision_mask = 20
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" index="0" unique_id=1999645684]
 scale = Vector2(3, 3)
 shape = SubResource("CircleShape2D_nrt83")
 
 [node name="Weakpoint" type="Area2D" parent="." index="4" unique_id=372708145]
-collision_layer = 16
-collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Weakpoint" index="0" unique_id=578469183]
 position = Vector2(0, 1)

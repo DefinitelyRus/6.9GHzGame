@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dkabbax0xm68p"]
 
 [ext_resource type="PackedScene" uid="uid://dxx774ofkp4h4" path="res://scenes/enemy/enemy.tscn" id="1_fr1an"]
-[ext_resource type="Script" uid="uid://cwjr53vbrwb8j" path="res://scenes/enemy/static_enemy/static_enemy.gd" id="2_t487b"]
+[ext_resource type="Script" uid="uid://b2axbxm446avr" path="res://scenes/enemy/flying_enemy/flying_enemy.gd" id="2_2gkin"]
 [ext_resource type="Texture2D" uid="uid://bted0cfqjtele" path="res://sprites/enemy_sprites/yahoe_enemy.png" id="3_t487b"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t487b"]
@@ -109,16 +109,23 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5kvnq"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5kvnq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_btn65"]
 
 [node name="StaticEnemy" unique_id=1143264470 node_paths=PackedStringArray("sprite", "attack_area") instance=ExtResource("1_fr1an")]
-script = ExtResource("2_t487b")
-health = 60.0
-critical_immunity_duration = 2.0
+script = ExtResource("2_2gkin")
+fly_speed = 80.0
+return_speed = 60.0
+swoop_speed = 250.0
+hover_height = 80.0
+hover_amplitude = 10.0
+hover_frequency = 1.5
+swoop_cooldown = 2.0
+swoop_distance = 200.0
+hover_side_offset = 60.0
 sprite = NodePath("AnimatedSprite2D")
-attack_area = NodePath("AttackArea")
+attack_area = NodePath("MeleeArea")
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=651429938]
 shape = SubResource("CapsuleShape2D_t487b")
@@ -129,14 +136,14 @@ animation = &"Hurt"
 frame = 1
 frame_progress = 1.0
 
-[node name="AttackArea" type="Area2D" parent="." index="2" unique_id=935786082]
+[node name="MeleeArea" type="Area2D" parent="." index="2" unique_id=2039453455]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" index="0" unique_id=1336667303]
-scale = Vector2(3.9624138, 3.9624138)
-shape = SubResource("CircleShape2D_5kvnq")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeArea" index="0" unique_id=1195932376]
+scale = Vector2(2.322975, 2.322975)
+shape = SubResource("CapsuleShape2D_5kvnq")
 
-[node name="WeakspotArea" type="Area2D" parent="." index="3" unique_id=754105551]
+[node name="Area2D" type="Area2D" parent="." index="3" unique_id=1970015128]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WeakspotArea" index="0" unique_id=887542091]
-position = Vector2(0, -21)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0" unique_id=1301895160]
+position = Vector2(0, -22)
 shape = SubResource("CircleShape2D_btn65")

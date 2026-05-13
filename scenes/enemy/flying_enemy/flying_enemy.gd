@@ -32,16 +32,9 @@ func _initialize_enemy() -> void:
 
 func update_ai(_delta: float) -> void:
 	hover_time += _delta
-	
-	if swoop_cooldown_timer > 0.0:
-		swoop_cooldown_timer -= _delta
-		if swoop_cooldown_timer <= 0.0:
-			can_swoop = true
-			
 	if is_stunned or current_state == State.HURT:
 		velocity = velocity.lerp(Vector2.ZERO, 15.0 * _delta)
 		return
-		
 	match current_state:
 		State.IDLE, State.PATROL:
 			_idle_hover(_delta)
@@ -50,8 +43,6 @@ func update_ai(_delta: float) -> void:
 		State.ATTACK:
 			_swoop_towards_target()
 	return
-	
-
 
 # ---------- FLYING BEHAVIOR ----------
 func _get_return_state() -> int:
@@ -99,7 +90,6 @@ func _chase_behavior() -> void:
 			_hover_near_player()
 		FlyingState.RETREATING:
 			_retreat_to_hover()
-		FlyingState.SWOOPING: _swoop_towards_target()
 
 
 func _hover_near_player() -> void:
@@ -130,11 +120,9 @@ func _initiate_swoop() -> void:
 	if sprite and sprite.sprite_frames.has_animation("Swoop"):
 		sprite.play("Swoop")
 
-func _swoop_towards_target():
+func _swoop_towards_target() -> void:
 	if not target:
-		if not target:
-			flying_state = FlyingState.HOVERING
-			current_state = State.CHASE
+		_start_retreat()
 		return
 
 	velocity = get_direction_to_target() * swoop_speed
@@ -159,7 +147,6 @@ func _retreat_to_hover() -> void:
 
 	if dist < 30.0:
 		flying_state = FlyingState.HOVERING
-		current_state = State.CHASE
 		return
 
 	var speed := minf(fly_speed, dist * 4.0)

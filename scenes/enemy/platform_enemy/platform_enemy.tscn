@@ -296,8 +296,6 @@ radius = 10.303899
 [sub_resource type="CircleShape2D" id="CircleShape2D_klx6y"]
 
 [node name="PlatformEnemy" unique_id=1143264470 node_paths=PackedStringArray("patrol_points", "sprite", "detection_area", "attack_area", "weakpoint_area") instance=ExtResource("1_1wn07")]
-collision_layer = 16
-collision_mask = 16
 script = ExtResource("2_di038")
 patrol_speed = 40.0
 chase_speed = 150.0
