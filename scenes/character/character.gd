@@ -1,6 +1,9 @@
 class_name Character
 extends CharacterBody2D
 
+# ---------- COMPONENTS ----------
+var current_level: Level
+
 @export_group("Movement")
 @export var speed: float = 130.0
 @export var acceleration: float = 1000.0
@@ -15,27 +18,34 @@ var facing_direction: int = 1
 var move_direction: float = 0.0
 var jump_intent: bool = false
 
-@onready var coyote_timer: Timer = $CoyoteTimer
-@onready var combat_handler: Node = get_node_or_null("CharacterCombat")
+@export var coyote_timer: Timer
+@export var combat_handler: Node
+@export var animation_handler: Node
 var camera: CameraManager = CameraManager.instance
 
 # ---------- GODOT CALLBACKS ----------
+func _enter_tree() -> void:
+	Log.me("Character %s has entered the tree.")
+	current_level = SceneLoader.get_current_level_as_level()
+	Log.me("Done!")
+	return
+
 func _ready() -> void:
 	Log.me("Readying character %s. Scanning children and properties..." % name)
 
 	if coyote_timer == null:
-		Log.warn("coyote_timer is missing from children; coyote jump won't work.", true, false)
+		Log.warn("coyote_timer is missing from children; coyote jump won't work.")
 		pass
 
 	if combat_handler == null:
-		Log.warn("combat_handler is missing from children; combat won't work.", true, false)
+		Log.warn("combat_handler is missing from children; combat won't work.")
 		pass
 
 	if camera == null:
-		Log.warn("camera is missing; screen shake won't work.", true, false)
+		Log.warn("camera is missing; screen shake won't work.")
 		pass
 
-	Log.me("Done!", true, false)
+	Log.me("Done!")
 	return
 
 
@@ -85,6 +95,8 @@ func _handle_jump() -> void:
 	if jump_intent and can_coyote_jump:
 		velocity.y = jump_velocity
 		
+		AudioManager.stream_audio("player_jump", AudioManager.AudioChannels.SFX_IRL)
+		
 		if camera != null: camera.shake(5.0)
 			
 		if coyote_timer != null: coyote_timer.stop()
@@ -102,6 +114,7 @@ func _update_floor_state() -> void:
 	if is_on_floor():
 		was_on_floor = true
 		is_jumping = false
+		#AudioManager.stream_audio("player_land", AudioManager.AudioChannels.SFX) # FIX: Plays constantly
 		pass
 
 	else:

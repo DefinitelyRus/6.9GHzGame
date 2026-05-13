@@ -3,11 +3,19 @@ extends Node2D
 
 # ---------- COMPONENTS ----------
 @onready var world_objects: Node2D = $WorldObjects # Add to on_ready check
-var level: Level = null # Set by the Level itself.
+var level: Level = null
 
-@export_group("Visibility")
+
+# ---------- DOMAIN VISIBILITY ----------
+@export_group("Domain Visibility")
+
 ## The default layer is the integer representation of the `visibility_layer` property.
 @export var default_layer: int = 0
+
+
+func set_enabled(enable: bool) -> void:
+	visible = enable
+	return
 
 
 # ---------- DEBUGGING ----------
@@ -34,5 +42,7 @@ func _ready() -> void:
 		child_2d.visibility_layer = updated_visibility_layer
 		pass
 	
+	level = SceneLoader.get_current_level_as_level()
+
 	Log.me("Done!", log_ready, false)
 	return

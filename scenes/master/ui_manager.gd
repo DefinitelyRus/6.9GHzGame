@@ -11,6 +11,8 @@ static var instance: UIManager = null
 @export var transition_node: TextureRect = null
 @export var on_screen_text_node: Control = null
 @export var main_menu_node: Control = null
+@export var fade_overlay_node: TextureRect = null
+@export var white_fade_overlay_node: TextureRect = null
 
 
 # ---------- GODOT CALLBACKS ----------
@@ -38,8 +40,12 @@ func _enter_tree() -> void:
 		Log.err("transition_node is null in UIManager. Please assign it in the inspector.")
 		pass
 	
-	if on_screen_text_node == null:
-		Log.err("on_screen_text_node is null in UIManager. Please assign it in the inspector.")
+	if fade_overlay_node == null:
+		Log.err("fade_overlay_node is null in UIManager. Please assign it in the inspector.")
+		pass
+	
+	if white_fade_overlay_node == null:
+		Log.err("white_fade_overlay_node is null in UIManager. Please assign it in the inspector.")
 		pass
 	
 	if main_menu_node == null:
@@ -248,6 +254,82 @@ static func reset_transition() -> void:
 	if instance != null and instance.transition_node != null:
 		instance.transition_node.reset()
 		pass
+	return
+
+
+# ----- FADE OVERLAYS -----
+
+## Fades in the black overlay (opacity from 0 to 1) over the specified duration.
+static func fade_in_black(duration: float = 0.5) -> void:
+	if instance != null and instance.fade_overlay_node != null:
+		var tween: Tween = instance.create_tween()
+		var modulate: Color = instance.fade_overlay_node.modulate
+		modulate.a = 0.0
+		instance.fade_overlay_node.modulate = modulate
+		tween.tween_property(instance.fade_overlay_node, "modulate:a", 1.0, duration)
+	return
+
+
+## Fades out the black overlay (opacity from 1 to 0) over the specified duration.
+static func fade_out_black(duration: float = 0.5) -> void:
+	if instance != null and instance.fade_overlay_node != null:
+		var tween: Tween = instance.create_tween()
+		tween.tween_property(instance.fade_overlay_node, "modulate:a", 0.0, duration)
+	return
+
+
+## Sets the black overlay to fully opaque instantly.
+static func set_black_overlay_opaque() -> void:
+	if instance != null and instance.fade_overlay_node != null:
+		var modulate: Color = instance.fade_overlay_node.modulate
+		modulate.a = 1.0
+		instance.fade_overlay_node.modulate = modulate
+	return
+
+
+## Sets the black overlay to fully transparent instantly.
+static func set_black_overlay_transparent() -> void:
+	if instance != null and instance.fade_overlay_node != null:
+		var modulate: Color = instance.fade_overlay_node.modulate
+		modulate.a = 0.0
+		instance.fade_overlay_node.modulate = modulate
+	return
+
+
+## Fades in the white overlay (opacity from 0 to 1) over the specified duration.
+static func fade_in_white(duration: float = 0.5) -> void:
+	if instance != null and instance.white_fade_overlay_node != null:
+		var tween: Tween = instance.create_tween()
+		var modulate: Color = instance.white_fade_overlay_node.modulate
+		modulate.a = 0.0
+		instance.white_fade_overlay_node.modulate = modulate
+		tween.tween_property(instance.white_fade_overlay_node, "modulate:a", 1.0, duration)
+	return
+
+
+## Fades out the white overlay (opacity from 1 to 0) over the specified duration.
+static func fade_out_white(duration: float = 0.5) -> void:
+	if instance != null and instance.white_fade_overlay_node != null:
+		var tween: Tween = instance.create_tween()
+		tween.tween_property(instance.white_fade_overlay_node, "modulate:a", 0.0, duration)
+	return
+
+
+## Sets the white overlay to fully opaque instantly.
+static func set_white_overlay_opaque() -> void:
+	if instance != null and instance.white_fade_overlay_node != null:
+		var modulate: Color = instance.white_fade_overlay_node.modulate
+		modulate.a = 1.0
+		instance.white_fade_overlay_node.modulate = modulate
+	return
+
+
+## Sets the white overlay to fully transparent instantly.
+static func set_white_overlay_transparent() -> void:
+	if instance != null and instance.white_fade_overlay_node != null:
+		var modulate: Color = instance.white_fade_overlay_node.modulate
+		modulate.a = 0.0
+		instance.white_fade_overlay_node.modulate = modulate
 	return
 
 

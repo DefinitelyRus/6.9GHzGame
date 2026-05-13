@@ -1,14 +1,21 @@
 class_name CharacterCombat
-extends Node
+extends Node2D
 
+# ---------- STATE ----------
 var in_combat: bool = false
 var facing_direction: int = 1
 
+# ---------- DEBUGGING ----------
+@export_group("Debugging")
+@export var log_ready: bool = false
+
+# ---------- GODOT CALLBACKS ----------
 func _ready() -> void:
-	Log.me("Readying character combat %s. Scanning properties..." % name)
-	Log.me("Done!", true, false)
+	Log.me("Readying character combat %s. Scanning properties..." % name, log_ready)
+	Log.me("Done!", log_ready)
 	return
 
+# ---------- PURPOSE-SPECIFIC METHODS ----------
 func set_facing_direction(direction: int) -> void:
 	facing_direction = direction
 	return
@@ -21,10 +28,12 @@ func is_in_combat() -> bool:
 
 func start_combat() -> void:
 	in_combat = true
-	print("combat started")
+	AudioManager.stream_audio("combat_start", AudioManager.AudioChannels.SFX_IRL)
+	Log.me("combat started")
 	return
 
 func end_combat() -> void:
 	in_combat = false
-	print("combat ended")
+	AudioManager.stream_audio("combat_end", AudioManager.AudioChannels.SFX_IRL)
+	Log.me("combat ended")
 	return
