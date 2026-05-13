@@ -13,6 +13,7 @@ config_version=5
 config/name="6.9GHz Game"
 run/main_scene="uid://dclg7ki5h2j0h"
 config/features=PackedStringArray("4.6", "GL Compatibility")
+boot_splash/image="uid://bvh3k5kf1bul6"
 config/icon="res://icon.svg"
 
 [display]

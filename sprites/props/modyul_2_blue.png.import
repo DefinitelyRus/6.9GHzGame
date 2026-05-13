@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlwd4yhcgh0r4"
-path="res://.godot/imported/ari_idle.png-0ed26d05f712a64dbbbc63ca2493ea74.ctex"
+uid="uid://bricrchwq2vpb"
+path="res://.godot/imported/modyul_2_blue.png-f5ce7a5b658c84c5422e80c386037f93.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/character/player/ari_idle.png"
-dest_files=["res://.godot/imported/ari_idle.png-0ed26d05f712a64dbbbc63ca2493ea74.ctex"]
+source_file="res://sprites/props/modyul_2_blue.png"
+dest_files=["res://.godot/imported/modyul_2_blue.png-f5ce7a5b658c84c5422e80c386037f93.ctex"]
 
 [params]
 
