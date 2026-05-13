@@ -63,7 +63,7 @@ func _handle_slingshot_input(delta: float) -> void:
 	if current_state == CombatState.STUNNED:
 		return
 
-	if InputManager.is_attacking and current_state == CombatState.IDLE:
+	if InputManager.is_buffered(InputManager.ATTACK) and current_state == CombatState.IDLE:
 		InputManager.consume_action(InputManager.ATTACK)
 		_start_charge()
 		return
