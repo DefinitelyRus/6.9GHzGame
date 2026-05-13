@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://tbp2w1ca4cov" path="res://levels/level_1/Tileset_1.png" id="2_62pej"]
 [ext_resource type="Texture2D" uid="uid://c0bnvry75jvqb" path="res://levels/level_1/IRL_Background_2.png" id="3_453p0"]
 [ext_resource type="PackedScene" uid="uid://dcrsquh004un6" path="res://scenes/character/player/player.tscn" id="6_3gqwa"]
+[ext_resource type="Texture2D" uid="uid://ddhn63koqlk63" path="res://sprites/main_menu/logo.png" id="7_453p0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_62pej"]
 texture = ExtResource("2_48l3b")
@@ -1009,6 +1010,51 @@ sources/1 = SubResource("TileSetAtlasSource_4f2re")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3gqwa"]
 
+[sub_resource type="Curve2D" id="Curve2D_453p0"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, -6, 0, 0, 0, 0, -2, -326)
+}
+point_count = 2
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tf4j3"]
+
+[sub_resource type="Animation" id="Animation_453p0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_tf4j3"]
+resource_name = "move"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.905]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_crwxq"]
+_data = {
+&"RESET": SubResource("Animation_453p0"),
+&"move": SubResource("Animation_tf4j3")
+}
+
 [node name="IRL Domain" unique_id=1073536569 instance=ExtResource("1_4f2re")]
 default_layer = 1
 
@@ -1057,3 +1103,26 @@ position = Vector2(81, 317)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0" unique_id=872294865]
 position = Vector2(0, 888)
 shape = SubResource("WorldBoundaryShape2D_3gqwa")
+
+[node name="Path2D" type="Path2D" parent="." index="4" unique_id=21825950]
+position = Vector2(1689, 532)
+curve = SubResource("Curve2D_453p0")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D" index="0" unique_id=1172774629]
+position = Vector2(0, -6)
+rotation = -1.5770463
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Path2D/PathFollow2D" index="0" unique_id=1815035637]
+remote_path = NodePath("../AnimatableBody2D")
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="Path2D/PathFollow2D" index="1" unique_id=160731666]
+scale = Vector2(1.0000001, 1.0000001)
+physics_material_override = SubResource("PhysicsMaterial_tf4j3")
+
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D/AnimatableBody2D" index="0" unique_id=749608237]
+rotation = 1.5707964
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("7_453p0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Path2D/PathFollow2D" index="2" unique_id=2079500544]
+libraries/ = SubResource("AnimationLibrary_crwxq")
