@@ -59,6 +59,7 @@ func set_domain_view(use_vr_domain: bool) -> void:
 		vr_domain.set_enabled(true)
 		irl_domain.set_enabled(false)
 		active_domain = vr_domain
+		AudioManager.stream_audio("domain_switch_to_vr", AudioManager.AudioChannels.MUSIC_IRL)
 
 		# TODO: Switch the player animated sprite to VR
 
@@ -72,6 +73,7 @@ func set_domain_view(use_vr_domain: bool) -> void:
 		vr_domain.set_enabled(false)
 		irl_domain.set_enabled(true)
 		active_domain = irl_domain
+		AudioManager.stream_audio("domain_switch_to_irl", AudioManager.AudioChannels.MUSIC_IRL)
 
 		# TODO: Switch the player animated sprite to IRL
 

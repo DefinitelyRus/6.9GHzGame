@@ -114,6 +114,7 @@ func _update_floor_state() -> void:
 		was_on_floor = true
 		is_jumping = false
 		#AudioManager.stream_audio("player_land", AudioManager.AudioChannels.SFX) # FIX: Plays constantly
+	
 		pass
 
 	else:
