@@ -143,6 +143,11 @@ func take_damage(amount: float, is_weakpoint: bool = false) -> void:
 	_flash_sprite(is_weakpoint)
 	_hitstop(hitstop_duration_weakpoint if is_weakpoint else hitstop_duration)
 	
+	if is_weakpoint:
+		AudioManager.stream_audio("enemy_weakpoint_hit", AudioManager.AudioChannels.SFX_IRL)
+	else:
+		AudioManager.stream_audio("enemy_hit", AudioManager.AudioChannels.SFX_IRL)
+	
 	if current_health <= 0:
 		die()
 	else:
@@ -202,6 +207,8 @@ func enter_hurt_state() -> void:
 	emit_signal("state_changed", current_state)
 	is_stunned = true
 	
+	AudioManager.stream_audio("enemy_hurt", AudioManager.AudioChannels.SFX_IRL)
+	
 	if sprite:
 		sprite.modulate = Color(0.4, 0.8, 1.0)
 	
@@ -221,6 +228,8 @@ func _enter_knockout(duration: float) -> void:
 	is_knocked_out = true
 	current_state = State.KNOCKED_OUT
 	emit_signal("state_changed", current_state)
+	
+	AudioManager.stream_audio("enemy_knockout", AudioManager.AudioChannels.SFX_IRL)
 
 	if sprite:
 		sprite.modulate = Color(0.6, 0.6, 1.0)
@@ -243,6 +252,9 @@ func die() -> void:
 	current_state = State.DEAD
 	emit_signal("died")
 	emit_signal("state_changed", current_state)
+	
+	AudioManager.stream_audio("enemy_death", AudioManager.AudioChannels.SFX_IRL)
+	
 	if sprite:
 		sprite.play("death")
 		sprite.modulate = Color.GRAY
@@ -260,6 +272,7 @@ func attack_player(player: Node2D) -> void:
 	
 	_can_attack = false
 	_attack_cooldown_timer = attack_cooldown
+	AudioManager.stream_audio("enemy_attack", AudioManager.AudioChannels.SFX_IRL)
 	if player.has_method("take_damage"):
 		player.take_damage(damage)
 

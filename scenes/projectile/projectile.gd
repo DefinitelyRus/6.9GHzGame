@@ -101,6 +101,7 @@ func _hit_enemy(enemy: Enemy, hit_position: Vector2) -> void:
 	var knockback_dir = (enemy.global_position - global_position).normalized()
 	enemy.apply_knockback(knockback_dir * damage)
 	
+	AudioManager.stream_audio("projectile_hit_enemy", AudioManager.AudioChannels.SFX_IRL)
 	emit_signal("hit_enemy", enemy, hit_position)
 	_despawn_quiet()
 
@@ -112,9 +113,7 @@ func _hit_platform(hit_position: Vector2) -> void:
 	_has_hit = true
 	
 	emit_signal("hit_platform", hit_position)
-	
-	# TODO: Play sound effect on platform hit
-	
+	AudioManager.stream_audio("projectile_impact", AudioManager.AudioChannels.SFX_IRL)
 	_despawn_on_impact()
 
 
