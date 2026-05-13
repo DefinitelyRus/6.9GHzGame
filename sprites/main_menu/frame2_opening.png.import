@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hrq4f1qetqqt"
-path="res://.godot/imported/ari_walk.png-9132fd2acf51e3ad5f8bcf09419ec81c.ctex"
+uid="uid://dm1y37c6aw3p"
+path="res://.godot/imported/frame2_opening.png-14f8d9605bb18d02e403b1557093ad3b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/character_sprites/ari_walk.png"
-dest_files=["res://.godot/imported/ari_walk.png-9132fd2acf51e3ad5f8bcf09419ec81c.ctex"]
+source_file="res://sprites/main_menu/frame2_opening.png"
+dest_files=["res://.godot/imported/frame2_opening.png-14f8d9605bb18d02e403b1557093ad3b.ctex"]
 
 [params]
 

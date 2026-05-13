@@ -2,6 +2,97 @@
 
 [ext_resource type="PackedScene" uid="uid://dxx774ofkp4h4" path="res://scenes/enemy/enemy.tscn" id="1_fr1an"]
 [ext_resource type="Script" uid="uid://b2axbxm446avr" path="res://scenes/enemy/flying_enemy/flying_enemy.gd" id="2_2gkin"]
+[ext_resource type="Texture2D" uid="uid://bwx4vnlepww7n" path="res://sprites/enemy_sprites/yahoe_enemy.png" id="3_t487b"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t487b"]
+radius = 12.0
+height = 64.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kvnq"]
+atlas = ExtResource("3_t487b")
+region = Rect2(96, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_btn65"]
+atlas = ExtResource("3_t487b")
+region = Rect2(128, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6hdkb"]
+atlas = ExtResource("3_t487b")
+region = Rect2(160, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cquor"]
+atlas = ExtResource("3_t487b")
+region = Rect2(192, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xg6q3"]
+atlas = ExtResource("3_t487b")
+region = Rect2(224, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l6fhb"]
+atlas = ExtResource("3_t487b")
+region = Rect2(256, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t487b"]
+atlas = ExtResource("3_t487b")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gl3ne"]
+atlas = ExtResource("3_t487b")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayi4f"]
+atlas = ExtResource("3_t487b")
+region = Rect2(64, 0, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_php0n"]
+animations = [{
+"frames": [{
+"duration": 0.9,
+"texture": SubResource("AtlasTexture_5kvnq")
+}, {
+"duration": 0.9,
+"texture": SubResource("AtlasTexture_btn65")
+}, {
+"duration": 0.9,
+"texture": SubResource("AtlasTexture_6hdkb")
+}, {
+"duration": 0.9,
+"texture": SubResource("AtlasTexture_cquor")
+}, {
+"duration": 0.9,
+"texture": SubResource("AtlasTexture_xg6q3")
+}, {
+"duration": 0.9,
+"texture": SubResource("AtlasTexture_l6fhb")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t487b")
+}],
+"loop": true,
+"name": &"hit1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gl3ne")
+}],
+"loop": true,
+"name": &"hit2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayi4f")
+}],
+"loop": true,
+"name": &"hit3",
+"speed": 5.0
+}]
 
 [node name="StaticEnemy" unique_id=1143264470 instance=ExtResource("1_fr1an")]
 script = ExtResource("2_2gkin")
@@ -14,3 +105,11 @@ hover_frequency = 1.5
 swoop_cooldown = 2.0
 swoop_distance = 200.0
 hover_side_offset = 60.0
+
+[node name="CollisionShape2D" parent="." index="0" unique_id=651429938]
+shape = SubResource("CapsuleShape2D_t487b")
+
+[node name="AnimatedSprite2D" parent="." index="1" unique_id=176656269]
+sprite_frames = SubResource("SpriteFrames_php0n")
+animation = &"hit3"
+frame_progress = 0.5408701
