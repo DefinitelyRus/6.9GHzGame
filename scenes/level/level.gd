@@ -22,7 +22,7 @@ func set_camera_focus(node: Node2D, instant: bool = false, track: bool = false) 
 		Log.err("The provided node must not be null.", true, true)
 		return
 	
-	Log.me("Focusing camera on node %s (x=%d y=%d)...")
+	Log.me("Focusing camera on node %s (x=%d y=%d)..." % [node.global_position.x, node.global_position.y])
 	camera.set_target_centered(node.global_position, instant)
 	if track: _camera_target_node = node
 
