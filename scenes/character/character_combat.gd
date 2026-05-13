@@ -28,10 +28,12 @@ func is_in_combat() -> bool:
 
 func start_combat() -> void:
 	in_combat = true
+	AudioManager.stream_audio("combat_start", AudioManager.AudioChannels.SFX_IRL)
 	Log.me("combat started")
 	return
 
 func end_combat() -> void:
 	in_combat = false
+	AudioManager.stream_audio("combat_end", AudioManager.AudioChannels.SFX_IRL)
 	Log.me("combat ended")
 	return

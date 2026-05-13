@@ -116,6 +116,7 @@ func _initiate_swoop() -> void:
 	flying_state = FlyingState.SWOOPING
 	current_state = State.ATTACK
 	emit_signal("state_changed", current_state)
+	AudioManager.stream_audio("flying_enemy_swoop", AudioManager.AudioChannels.SFX_IRL)
 	if sprite and sprite.sprite_frames.has_animation("Swoop"):
 		sprite.play("Swoop")
 
