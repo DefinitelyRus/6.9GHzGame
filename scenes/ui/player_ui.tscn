@@ -189,6 +189,7 @@ size_flags_vertical = 0
 texture = ExtResource("2_rtpfr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=906442528]
+visible = false
 scale = Vector2(0.929481, 0.9333333)
 sprite_frames = SubResource("SpriteFrames_bjiww")
 frame = 2
