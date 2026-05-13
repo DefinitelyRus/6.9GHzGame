@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://tbp2w1ca4cov" path="res://levels/level_1/Tileset_1.png" id="3_rtpfr"]
 [ext_resource type="Texture2D" uid="uid://bej7mb3wt1tfx" path="res://sprites/main_menu/ari_vrmenu.png" id="4_y8ff4"]
 [ext_resource type="Texture2D" uid="uid://dn05btjeqqxck" path="res://levels/level_1/Tileset_2.png" id="5_0cbkn"]
+[ext_resource type="Texture2D" uid="uid://cq0fjjsigixn1" path="res://sprites/main_menu/frame1_opening.png" id="7_0cbkn"]
+[ext_resource type="Texture2D" uid="uid://yb40cckqiv2v" path="res://sprites/main_menu/frame2_opening.png" id="8_wm4y2"]
+[ext_resource type="Texture2D" uid="uid://bvrut324ptu1i" path="res://sprites/main_menu/frame3_opening.png" id="9_yrfg3"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_48xfa"]
 texture = ExtResource("3_rtpfr")
@@ -22,6 +25,35 @@ region_rect = Rect2(272, 33, 64, 14)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bkx2g"]
 texture = ExtResource("5_0cbkn")
 region_rect = Rect2(272, 17, 64, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_llniq"]
+atlas = ExtResource("7_0cbkn")
+region = Rect2(0, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayl2b"]
+atlas = ExtResource("8_wm4y2")
+region = Rect2(0, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yh683"]
+atlas = ExtResource("9_yrfg3")
+region = Rect2(0, 0, 640, 360)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bjiww"]
+animations = [{
+"frames": [{
+"duration": 20.0,
+"texture": SubResource("AtlasTexture_llniq")
+}, {
+"duration": 30.0,
+"texture": SubResource("AtlasTexture_ayl2b")
+}, {
+"duration": 20.0,
+"texture": SubResource("AtlasTexture_yh683")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1afs1"]
 texture = ExtResource("3_rtpfr")
@@ -155,6 +187,13 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 texture = ExtResource("2_rtpfr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=906442528]
+scale = Vector2(0.929481, 0.9333333)
+sprite_frames = SubResource("SpriteFrames_bjiww")
+frame = 2
+frame_progress = 1.0
+centered = false
 
 [node name="HUD" type="MarginContainer" parent="." unique_id=954386827]
 visible = false
