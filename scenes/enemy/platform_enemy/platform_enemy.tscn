@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dxx774ofkp4h4" path="res://scenes/enemy/enemy.tscn" id="1_1wn07"]
 [ext_resource type="Script" uid="uid://dboj1026jm2e0" path="res://scenes/enemy/platform_enemy/platform_enemy.gd" id="2_di038"]
-[ext_resource type="Texture2D" uid="uid://cis8cnkkd15ta" path="res://sprites/enemy_sprites/benjamin_enemy.png" id="3_0wr1t"]
+[ext_resource type="Texture2D" uid="uid://ch3wrrpcmtejj" path="res://sprites/enemy_sprites/benjamin_enemy.png" id="3_0wr1t"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0wr1t"]
 radius = 7.0
@@ -116,6 +116,42 @@ region = Rect2(16, 0, 16, 48)
 atlas = ExtResource("3_0wr1t")
 region = Rect2(0, 0, 16, 48)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_0wr1t"]
+atlas = ExtResource("3_0wr1t")
+region = Rect2(0, 48, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4nlnc"]
+atlas = ExtResource("3_0wr1t")
+region = Rect2(16, 48, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykyaw"]
+atlas = ExtResource("3_0wr1t")
+region = Rect2(32, 48, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vl3j8"]
+atlas = ExtResource("3_0wr1t")
+region = Rect2(48, 48, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykgse"]
+atlas = ExtResource("3_0wr1t")
+region = Rect2(64, 48, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8hyt"]
+atlas = ExtResource("3_0wr1t")
+region = Rect2(80, 48, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_klyen"]
+atlas = ExtResource("3_0wr1t")
+region = Rect2(96, 48, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rnd36"]
+atlas = ExtResource("3_0wr1t")
+region = Rect2(112, 48, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lff2c"]
+atlas = ExtResource("3_0wr1t")
+region = Rect2(0, 96, 16, 48)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_4nlnc"]
 animations = [{
 "frames": [{
@@ -218,9 +254,50 @@ animations = [{
 "loop": false,
 "name": &"revive",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0wr1t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4nlnc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykyaw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vl3j8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykgse")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8hyt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_klyen")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rnd36")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lff2c")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
 }]
 
-[node name="PlatformEnemy" unique_id=1143264470 node_paths=PackedStringArray("patrol_points") instance=ExtResource("1_1wn07")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_3f4df"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qnd8h"]
+radius = 10.303899
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_klx6y"]
+
+[node name="PlatformEnemy" unique_id=1143264470 node_paths=PackedStringArray("patrol_points", "sprite", "detection_area", "attack_area", "weakpoint_area") instance=ExtResource("1_1wn07")]
+collision_layer = 16
+collision_mask = 16
 script = ExtResource("2_di038")
 patrol_speed = 40.0
 chase_speed = 150.0
@@ -229,12 +306,34 @@ respected_edges = true
 turn_at_walls = true
 patrol_wait_time = 1.0
 patrol_points = []
+sprite = NodePath("AnimatedSprite2D")
+detection_area = NodePath("DetectionArea")
+attack_area = NodePath("AttackArea")
+weakpoint_area = NodePath("WeakpointArea")
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=651429938]
 shape = SubResource("CapsuleShape2D_0wr1t")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=176656269]
 sprite_frames = SubResource("SpriteFrames_4nlnc")
-animation = &"death"
-frame = 7
-frame_progress = 1.0
+animation = &"walk"
+frame_progress = 0.8268634
+
+[node name="DetectionArea" type="Area2D" parent="." index="2" unique_id=1969977304]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" index="0" unique_id=1732971400]
+scale = Vector2(8.233007, 8.233007)
+shape = SubResource("CircleShape2D_3f4df")
+
+[node name="AttackArea" type="Area2D" parent="." index="3" unique_id=565945082]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" index="0" unique_id=1574868219]
+scale = Vector2(2.0594592, -3.1718333)
+shape = SubResource("CircleShape2D_qnd8h")
+
+[node name="WeakpointArea" type="Area2D" parent="." index="4" unique_id=409113524]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WeakpointArea" index="0" unique_id=1133576146]
+position = Vector2(0, -15)
+scale = Vector2(0.68244874, 0.60523534)
+shape = SubResource("CircleShape2D_klx6y")

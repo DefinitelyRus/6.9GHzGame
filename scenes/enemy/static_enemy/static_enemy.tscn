@@ -1,12 +1,20 @@
 [gd_scene format=3 uid="uid://dkabbax0xm68p"]
 
 [ext_resource type="PackedScene" uid="uid://dxx774ofkp4h4" path="res://scenes/enemy/enemy.tscn" id="1_fr1an"]
-[ext_resource type="Script" uid="uid://b2axbxm446avr" path="res://scenes/enemy/flying_enemy/flying_enemy.gd" id="2_2gkin"]
-[ext_resource type="Texture2D" uid="uid://bwx4vnlepww7n" path="res://sprites/enemy_sprites/yahoe_enemy.png" id="3_t487b"]
+[ext_resource type="Script" uid="uid://cwjr53vbrwb8j" path="res://scenes/enemy/static_enemy/static_enemy.gd" id="2_t487b"]
+[ext_resource type="Texture2D" uid="uid://bted0cfqjtele" path="res://sprites/enemy_sprites/yahoe_enemy.png" id="3_t487b"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t487b"]
 radius = 12.0
 height = 64.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t487b"]
+atlas = ExtResource("3_t487b")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqi5e"]
+atlas = ExtResource("3_t487b")
+region = Rect2(32, 0, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5kvnq"]
 atlas = ExtResource("3_t487b")
@@ -32,10 +40,6 @@ region = Rect2(224, 0, 32, 64)
 atlas = ExtResource("3_t487b")
 region = Rect2(256, 0, 32, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t487b"]
-atlas = ExtResource("3_t487b")
-region = Rect2(0, 0, 32, 64)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_gl3ne"]
 atlas = ExtResource("3_t487b")
 region = Rect2(32, 0, 32, 64)
@@ -46,6 +50,17 @@ region = Rect2(64, 0, 32, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_php0n"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t487b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xqi5e")
+}],
+"loop": false,
+"name": &"Hurt",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 0.9,
 "texture": SubResource("AtlasTexture_5kvnq")
@@ -94,22 +109,34 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="StaticEnemy" unique_id=1143264470 instance=ExtResource("1_fr1an")]
-script = ExtResource("2_2gkin")
-fly_speed = 80.0
-return_speed = 60.0
-swoop_speed = 250.0
-hover_height = 80.0
-hover_amplitude = 10.0
-hover_frequency = 1.5
-swoop_cooldown = 2.0
-swoop_distance = 200.0
-hover_side_offset = 60.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_5kvnq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_btn65"]
+
+[node name="StaticEnemy" unique_id=1143264470 node_paths=PackedStringArray("sprite", "attack_area") instance=ExtResource("1_fr1an")]
+script = ExtResource("2_t487b")
+health = 60.0
+critical_immunity_duration = 2.0
+sprite = NodePath("AnimatedSprite2D")
+attack_area = NodePath("AttackArea")
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=651429938]
 shape = SubResource("CapsuleShape2D_t487b")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=176656269]
 sprite_frames = SubResource("SpriteFrames_php0n")
-animation = &"hit3"
-frame_progress = 0.5408701
+animation = &"Hurt"
+frame = 1
+frame_progress = 1.0
+
+[node name="AttackArea" type="Area2D" parent="." index="2" unique_id=935786082]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" index="0" unique_id=1336667303]
+scale = Vector2(3.9624138, 3.9624138)
+shape = SubResource("CircleShape2D_5kvnq")
+
+[node name="WeakspotArea" type="Area2D" parent="." index="3" unique_id=754105551]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WeakspotArea" index="0" unique_id=887542091]
+position = Vector2(0, -21)
+shape = SubResource("CircleShape2D_btn65")
