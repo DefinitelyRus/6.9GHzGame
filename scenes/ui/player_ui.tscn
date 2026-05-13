@@ -1,0 +1,309 @@
+[gd_scene format=3 uid="uid://d0peth2o8k2wi"]
+
+[ext_resource type="Script" uid="uid://cfds4c3hwbnqq" path="res://scenes/ui/main_screen.gd" id="1_1afs1"]
+[ext_resource type="Texture2D" uid="uid://gvx0xpswqr4o" path="res://sprites/main_menu/ari_menu.png" id="2_g7v3g"]
+[ext_resource type="Texture2D" uid="uid://cvlm37si7c1ey" path="res://sprites/main_menu/Moirai-Logo.png" id="2_rtpfr"]
+[ext_resource type="Texture2D" uid="uid://tbp2w1ca4cov" path="res://levels/level_1/Tileset_1.png" id="3_rtpfr"]
+[ext_resource type="Texture2D" uid="uid://bej7mb3wt1tfx" path="res://sprites/main_menu/ari_vrmenu.png" id="4_y8ff4"]
+[ext_resource type="Texture2D" uid="uid://dn05btjeqqxck" path="res://levels/level_1/Tileset_2.png" id="5_0cbkn"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_48xfa"]
+texture = ExtResource("3_rtpfr")
+region_rect = Rect2(272, 34, 64, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8isll"]
+texture = ExtResource("3_rtpfr")
+region_rect = Rect2(272, 18, 64, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7ctsh"]
+texture = ExtResource("5_0cbkn")
+region_rect = Rect2(272, 33, 64, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bkx2g"]
+texture = ExtResource("5_0cbkn")
+region_rect = Rect2(272, 17, 64, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1afs1"]
+texture = ExtResource("3_rtpfr")
+region_rect = Rect2(352, 16, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g7v3g"]
+texture = ExtResource("3_rtpfr")
+region_rect = Rect2(352, 64, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rtpfr"]
+texture = ExtResource("5_0cbkn")
+region_rect = Rect2(352, 16, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y8ff4"]
+texture = ExtResource("5_0cbkn")
+region_rect = Rect2(352, 64, 32, 32)
+
+[node name="PlayerUI" type="Control" unique_id=1949042988]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainScreen" type="MarginContainer" parent="." unique_id=808571440 node_paths=PackedStringArray("reality_ver", "vr_ver")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1afs1")
+reality_ver = NodePath("IRL")
+vr_ver = NodePath("VR")
+min_wait = 3
+max_wait = 7
+flash_duration = 0.5
+
+[node name="IRL" type="NinePatchRect" parent="MainScreen" unique_id=1331999073]
+layout_mode = 2
+texture = ExtResource("2_g7v3g")
+
+[node name="MarginContainer" type="MarginContainer" parent="MainScreen/IRL" unique_id=1137782201]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainScreen/IRL/MarginContainer" unique_id=502301812]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_constants/separation = 10
+
+[node name="Play" type="Button" parent="MainScreen/IRL/MarginContainer/VBoxContainer" unique_id=1902452457]
+custom_minimum_size = Vector2(130, 24)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_styles/normal = SubResource("StyleBoxTexture_48xfa")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_8isll")
+theme_override_styles/hover = SubResource("StyleBoxTexture_8isll")
+
+[node name="Exit" type="Button" parent="MainScreen/IRL/MarginContainer/VBoxContainer" unique_id=417589331]
+custom_minimum_size = Vector2(130, 24)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_styles/normal = SubResource("StyleBoxTexture_48xfa")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_48xfa")
+theme_override_styles/hover = SubResource("StyleBoxTexture_8isll")
+
+[node name="VR" type="NinePatchRect" parent="MainScreen" unique_id=1944943896]
+visible = false
+layout_mode = 2
+texture = ExtResource("4_y8ff4")
+
+[node name="MarginContainer" type="MarginContainer" parent="MainScreen/VR" unique_id=1734964933]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainScreen/VR/MarginContainer" unique_id=219165892]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_constants/separation = 10
+
+[node name="Play" type="Button" parent="MainScreen/VR/MarginContainer/VBoxContainer" unique_id=1211216959]
+custom_minimum_size = Vector2(130, 24)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_styles/normal = SubResource("StyleBoxTexture_7ctsh")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_bkx2g")
+theme_override_styles/hover = SubResource("StyleBoxTexture_bkx2g")
+
+[node name="Exit" type="Button" parent="MainScreen/VR/MarginContainer/VBoxContainer" unique_id=331242739]
+custom_minimum_size = Vector2(130, 24)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_styles/normal = SubResource("StyleBoxTexture_7ctsh")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_7ctsh")
+theme_override_styles/hover = SubResource("StyleBoxTexture_bkx2g")
+
+[node name="Logo" type="MarginContainer" parent="MainScreen" unique_id=1815516637]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 30
+
+[node name="Logo" type="NinePatchRect" parent="MainScreen/Logo" unique_id=572088524]
+custom_minimum_size = Vector2(112, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("2_rtpfr")
+
+[node name="HUD" type="MarginContainer" parent="." unique_id=954386827]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+
+[node name="reality_ver" type="HBoxContainer" parent="HUD" unique_id=1507918765]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Module1" type="Button" parent="HUD/reality_ver" unique_id=1880294710]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_1afs1")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_g7v3g")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1afs1")
+toggle_mode = true
+
+[node name="Module2" type="Button" parent="HUD/reality_ver" unique_id=1252759918]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_1afs1")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_g7v3g")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1afs1")
+toggle_mode = true
+
+[node name="Module3" type="Button" parent="HUD/reality_ver" unique_id=1947063244]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_1afs1")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_g7v3g")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1afs1")
+toggle_mode = true
+
+[node name="Module4" type="Button" parent="HUD/reality_ver" unique_id=184487922]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_1afs1")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_g7v3g")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1afs1")
+toggle_mode = true
+
+[node name="vr_ver" type="HBoxContainer" parent="HUD" unique_id=367016324]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Module1" type="Button" parent="HUD/vr_ver" unique_id=86017979]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_rtpfr")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_y8ff4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rtpfr")
+toggle_mode = true
+
+[node name="Module2" type="Button" parent="HUD/vr_ver" unique_id=1615536419]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_rtpfr")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_y8ff4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rtpfr")
+toggle_mode = true
+
+[node name="Module3" type="Button" parent="HUD/vr_ver" unique_id=1664090878]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_rtpfr")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_y8ff4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rtpfr")
+toggle_mode = true
+
+[node name="Module4" type="Button" parent="HUD/vr_ver" unique_id=1240781520]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_rtpfr")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_y8ff4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rtpfr")
+toggle_mode = true
+
+[node name="Popup" type="MarginContainer" parent="." unique_id=1046536376]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="reality_ver" type="NinePatchRect" parent="Popup" unique_id=266212340]
+custom_minimum_size = Vector2(256, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_rtpfr")
+region_rect = Rect2(19, 227, 250, 122)
+
+[node name="vr_ver" type="NinePatchRect" parent="Popup" unique_id=1771460206]
+visible = false
+custom_minimum_size = Vector2(256, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_0cbkn")
+region_rect = Rect2(17, 240, 255, 130)
+
+[node name="Dialogue Box" type="MarginContainer" parent="." unique_id=403718319]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_bottom = 10
+
+[node name="reality_ver" type="NinePatchRect" parent="Dialogue Box" unique_id=1856966913]
+custom_minimum_size = Vector2(300, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture = ExtResource("3_rtpfr")
+region_rect = Rect2(16, 352, 256, 48)
+
+[node name="vr_ver" type="NinePatchRect" parent="Dialogue Box" unique_id=144084363]
+custom_minimum_size = Vector2(300, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture = ExtResource("5_0cbkn")
+region_rect = Rect2(16, 370, 256, 46)
