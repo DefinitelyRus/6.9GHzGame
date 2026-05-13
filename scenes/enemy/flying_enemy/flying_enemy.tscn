@@ -2,10 +2,38 @@
 
 [ext_resource type="PackedScene" uid="uid://dxx774ofkp4h4" path="res://scenes/enemy/enemy.tscn" id="1_nhq4t"]
 [ext_resource type="Script" uid="uid://b2axbxm446avr" path="res://scenes/enemy/flying_enemy/flying_enemy.gd" id="2_t2v10"]
-[ext_resource type="Texture2D" uid="uid://cicx3o5qi6ijn" path="res://sprites/enemy_sprites/benji_enemy.png" id="3_1wleg"]
+[ext_resource type="Texture2D" uid="uid://b2svl50aiw1tt" path="res://sprites/enemy_sprites/benji_enemy.png" id="3_1wleg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1wleg"]
 radius = 20.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ovw4j"]
+atlas = ExtResource("3_1wleg")
+region = Rect2(0, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7148j"]
+atlas = ExtResource("3_1wleg")
+region = Rect2(48, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kr385"]
+atlas = ExtResource("3_1wleg")
+region = Rect2(96, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4l43"]
+atlas = ExtResource("3_1wleg")
+region = Rect2(144, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvnyg"]
+atlas = ExtResource("3_1wleg")
+region = Rect2(192, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p26jq"]
+atlas = ExtResource("3_1wleg")
+region = Rect2(240, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kmgy5"]
+atlas = ExtResource("3_1wleg")
+region = Rect2(288, 96, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1wleg"]
 atlas = ExtResource("3_1wleg")
@@ -57,6 +85,32 @@ region = Rect2(288, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g4l43"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ovw4j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7148j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kr385")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4l43")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xvnyg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p26jq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kmgy5")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1wleg")
@@ -121,7 +175,6 @@ shape = SubResource("CircleShape2D_1wleg")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=176656269]
 sprite_frames = SubResource("SpriteFrames_g4l43")
-animation = &"idle"
-frame = 3
-frame_progress = 0.8894208
+animation = &"death"
+frame_progress = 0.68405706
 offset = Vector2(1.835, 0)
