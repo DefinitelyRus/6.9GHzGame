@@ -13,8 +13,6 @@ extends Node2D
 ## The parent node of child nodes indicating the position of camera focus points.
 @onready var camera_focus_collection: Node2D = $CameraFocusPoints
 
-
-
 # ---------- CAMERA CONTROL ----------
 var _camera_target_node: Node2D = null
 func set_camera_focus(node: Node2D, instant: bool = false, track: bool = false) -> void:
@@ -181,7 +179,8 @@ func _ready() -> void:
 	
 	else: vr_domain.level = self
 
-	set_domain_view(true)
+	#set_domain_view(true)
+	AudioManager.stream_audio("music", AudioManager.AudioChannels.MUSIC_IRL)
 
 	Log.me("Done!", log_ready, false)
 	return

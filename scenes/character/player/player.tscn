@@ -90,6 +90,7 @@ sprite_frames = SubResource("SpriteFrames_puv7k")
 animation = &"ari_idle"
 
 [node name="VRAnimatedSprite" type="AnimatedSprite2D" parent="." index="2" unique_id=1660676300]
+visible = false
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_puv7k")
 animation = &"ari_idle"
