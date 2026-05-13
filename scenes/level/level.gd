@@ -55,27 +55,49 @@ func set_domain_view(use_vr_domain: bool) -> void:
 
 	# VR view
 	if use_vr_domain:
-		# TODO: Hide/show all objects except Player
+		# Fade in to black (0.5s)
+		UIManager.fade_in_black(0.5)
+		
+		# Play VR on SFX
+		AudioManager.stream_audio("vr_on", AudioManager.AudioChannels.MASTER)
+		
+		# Wait 0.5s for fade to complete
+		await get_tree().create_timer(0.5).timeout
+		
+		# Switch domain
 		vr_domain.set_enabled(true)
 		irl_domain.set_enabled(false)
 		active_domain = vr_domain
 
-		# TODO: Switch the player animated sprite to VR
+		# Play VR on animation
+		if player != null and player.animation_handler != null:
+			player.animation_handler.play_vr_on_animation()
 
 		AudioManager.use_vr_audio(true)
+		
+		# Cut to white and fade out (0.5s)
+		UIManager.set_white_overlay_opaque()
+		UIManager.fade_out_white(0.5)
 
 		pass
 
 	# IRL view
 	else:
-		# TODO: Hide/show all objects except Player
+		# Cut to black instantly
+		UIManager.set_black_overlay_opaque()
+		
+		# Play VR off SFX
+		AudioManager.stream_audio("vr_off", AudioManager.AudioChannels.MASTER)
+		
+		# Switch domain instantly
 		vr_domain.set_enabled(false)
 		irl_domain.set_enabled(true)
 		active_domain = irl_domain
 
-		# TODO: Switch the player animated sprite to IRL
-
 		AudioManager.use_vr_audio(false)
+		
+		# Fade out black (1.0s)
+		UIManager.fade_out_black(1.0)
 
 		pass
 
@@ -149,6 +171,8 @@ func _ready() -> void:
 		return
 	
 	else: vr_domain.level = self
+
+	set_domain_view(true)
 
 	Log.me("Done!", log_ready, false)
 	return
