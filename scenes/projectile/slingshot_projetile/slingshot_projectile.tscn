@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dx3i14rxxucba"]
+
+[ext_resource type="PackedScene" uid="uid://i0vov00mne0w" path="res://scenes/projectile/projectile.tscn" id="1_lgdfa"]
+[ext_resource type="Script" uid="uid://cmtve8qjt6g8a" path="res://scenes/projectile/slingshot_projetile/slingshot_projectile.gd" id="2_x1efv"]
+
+[node name="SlingshotProjectile" unique_id=131780777 instance=ExtResource("1_lgdfa")]
+script = ExtResource("2_x1efv")
